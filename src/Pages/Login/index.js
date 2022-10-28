@@ -1,7 +1,7 @@
 import {React, useState }from "react"
 import { useNavigate } from "react-router-dom";
 
-const Register = () => {
+const Login = () => {
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
 
@@ -15,7 +15,6 @@ const Register = () => {
             "password": password
         }
         console.log(loginData)
-        // const resp = await httpClient.post("//localhost:5000/login", {
             
         const options = {
             method: "POST",
@@ -37,45 +36,46 @@ const Register = () => {
     }
 
   return (
-    <div>
-       <div className="content-section">
-        <form action="" method="POST" onSubmit={handleLogin}>
-            
-            <fieldset className="form-group">
-                <legend className="border-bottom mb-4">Login to play</legend>
-                <p></p>
-                <div className="form-group">
-                    <label>Username</label>
-                    <input
-                        type="username"
-                        className="form-control mt-1"
-                        placeholder="Enter username"
-                        onChange={(e) => setUsername(e.target.value)}
-                        />
-                </div>
-                <div className="form-group">
-                    <label>Password</label>
-                    <input
-                    type="password"
-                    className="form-control mt-1"
-                    placeholder="Enter password"
-                    onChange={(e) => setPassword(e.target.value)}
-                    />
-                </div>
-                <div className="form-group">
-                    <button type="submit" className="btn btn-primary">Submit</button>
-                </div>
-            </fieldset>
-        </form>
-    </div>
+        <div role="main">
+            <div className="content-section">
+                <form action="" method="POST" role="form" onSubmit={handleLogin}>
 
-    <div className="border-top pt-3">
-        <small className="text-muted">
-            Don't have have an account? <a className="ml-2" href="/register">Sign Up</a>
-        </small>
-    </div>
-    </div>
-  )
+                    <fieldset className="form-group">
+                        <legend className="border-bottom mb-4">Login to play</legend>
+                        <p></p>
+                        <div className="form-group">
+                            <label>Username</label>
+                            <input
+                                type="username"
+                                className="form-control mt-1"
+                                placeholder="Enter username"
+                                onChange={(e) => setUsername(e.target.value)}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Password</label>
+                            <input
+                                type="password"
+                                className="form-control mt-1"
+                                placeholder="Enter password"
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <button type="submit" className="btn btn-primary" role="button" data-testid="submit-btn">Submit</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+
+            <div className="border-top pt-3">
+                <small className="text-muted">
+                    Don't have have an account? <a className="ml-2" href="/register">Sign Up</a>
+                </small>
+            </div>
+        </div>
+    )
+
 };
 
-export default Register;
+export default Login;

@@ -2,6 +2,7 @@ import {React, useState} from "react"
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
 
@@ -38,57 +39,55 @@ const Register = () => {
         }
         
     }
-  return (
-    <div>
-    <div className="content-section">
-        <form action="" method="POST" onSubmit={handleRegister}>
-            
-            <fieldset className="form-group">
-                <legend className="border-bottom mb-4">Register to play</legend>
-                <div className="form-group">
-                    <label name="username">Username</label>
-                    <input
-                        type="username"
-                        name="username"
-                        className="form-control mt-1"
-                        placeholder="Enter username"
-                        onChange={(e) => setUsername(e.target.value)}
-                        />
-                </div>
-                <div className="form-group">
-                    <label name="password">Password</label>
-                    <input
-                    type="password"
-                    name="password"
-                    className="form-control mt-1"
-                    placeholder="Enter password"
-                    onChange={(e) => setPassword(e.target.value)}
-                    />
-                </div>
-                <div className="form-group">
-                    <label name="confirm_password">Confirm Password</label>
-                    <input
-                    type="password"
-                    name="confirm_password"
-                    className="form-control mt-1"
-                    placeholder="Confirm password"
-                    />
-                </div>
-                <div className="form-group">
-                    <button type="submit" className="btn btn-primary">Submit</button>
-                </div>
-            </fieldset>
-        </form>
-    </div>
 
-    <div className="border-top pt-3">
-        <small className="text-muted">
-            Already have an account? <a href='/login' className="ml-2">Sign In</a>
-        </small>
-    </div>
+    return (
+        <div role="main">
+            <div className="content-section">
+                <form action="" method="POST" onSubmit={handleRegister}>
 
-    </div>
-  )
+                    <fieldset className="form-group">
+                        <legend className="border-bottom mb-4">Register to play</legend>
+                        <div className="form-group">
+                            <label>Username</label>
+                            <input
+                                type="username"
+                                className="form-control mt-1"
+                                placeholder="Enter username"
+                                onChange={(e) => setUsername(e.target.value)}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Password</label>
+                            <input
+                                type="password"
+                                className="form-control mt-1"
+                                placeholder="Enter password"
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label>Confirm Password</label>
+                            <input
+                                type="password"
+                                className="form-control mt-1"
+                                placeholder="Confirm password"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <button type="submit" className="btn btn-primary" role="button" data-testid="submit-btn">Submit</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+
+            <div className="border-top pt-3">
+                <small className="text-muted">
+                    Already have an account? <a href='/login' className="ml-2">Sign In</a>
+                </small>
+            </div>
+
+        </div>
+    )
 };
 
 export default Register;

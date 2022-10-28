@@ -5,7 +5,7 @@ import { Routes, Route } from 'react-router-dom'
 
 function App() {
   return (
-    <>
+    <div role="application">
       <Routes>
         <Route path='login' element={<Login />}>Login</Route>
         <Route path='register' element={<Register />}>Register</Route>
@@ -13,7 +13,7 @@ function App() {
         <Route path='Create' element={<Create />}>Create</Route>
         <Route path='Lobby' element={<Lobby />}>Lobby</Route>
       </Routes>
-    </>
+    </div>
   );
 }
 
