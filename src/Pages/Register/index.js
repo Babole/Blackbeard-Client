@@ -1,11 +1,20 @@
-import React from "react"
+import {React, useState} from "react"
 
 const Register = () => {
-    // const navigate = useNavigate();
+    const [username, setUsername] = useState(null);
+    const [password, setPassword] = useState(null);
+
+    const handleRegister = async (e) => {
+        e.preventDefault()
+
+        const registerData = {
+            username: 
+        }
+    }
   return (
     <div>
     <div className="content-section">
-        <form action="" method="POST">
+        <form action="" method="POST" onSubmit={handleRegister}>
             
             <fieldset className="form-group">
                 <legend className="border-bottom mb-4">Register to play</legend>

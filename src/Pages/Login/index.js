@@ -1,23 +1,38 @@
 import {React, useState }from "react"
-import httpClient from "../../httpClient";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-    const [username, setUsername] = useState()
-    const [password, setPassword] = useState()
+    const [username, setUsername] = useState(null);
+    const [password, setPassword] = useState(null);
+
+    const navigate = useNavigate();
 
 
     const handleLogin  = async (e) => {
         e.preventDefault()
-        console.log(username, password)
-        sessionStorage.setItem("username", username)
+        const loginData ={
+            "username": username,
+            "password": password
+        }
+        console.log(loginData)
         // const resp = await httpClient.post("//localhost:5000/login", {
-        const resp = await axios.post("//localhost:5000/login", {
-            username,
-            password
-        })
-
-        console.log(resp.data)
+            
+        const options = {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(loginData)
+        }
+        
+        try{
+            // cannot use localhost on Mac
+            // AND no 'https' becuase it cannot pass security check
+            const resp = await fetch("http://127.0.0.1:5000/login", options);
+            console.log(resp)
+            sessionStorage.setItem("username", username)
+            navigate("/home")
+        } catch(err){
+            console.log(err)
+        }
         
     }
 
