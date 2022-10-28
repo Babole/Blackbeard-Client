@@ -48,7 +48,7 @@ const Register = () => {
                     <fieldset className="form-group">
                         <legend className="border-bottom mb-4">Register to play</legend>
                         <div className="form-group">
-                            <label>Username</label>
+                            <label name="username">Username</label>
                             <input
                                 type="username"
                                 className="form-control mt-1"
@@ -57,7 +57,7 @@ const Register = () => {
                             />
                         </div>
                         <div className="form-group">
-                            <label>Password</label>
+                            <label name="password">Password</label>
                             <input
                                 type="password"
                                 className="form-control mt-1"
@@ -66,7 +66,7 @@ const Register = () => {
                             />
                         </div>
                         <div class="form-group">
-                            <label>Confirm Password</label>
+                            <label name="confirm_password">Confirm Password</label>
                             <input
                                 type="password"
                                 className="form-control mt-1"

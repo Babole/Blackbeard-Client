@@ -44,7 +44,7 @@ const Login = () => {
                         <legend className="border-bottom mb-4">Login to play</legend>
                         <p></p>
                         <div className="form-group">
-                            <label>Username</label>
+                            <label name="username">Username</label>
                             <input
                                 type="username"
                                 className="form-control mt-1"
@@ -53,7 +53,7 @@ const Login = () => {
                             />
                         </div>
                         <div className="form-group">
-                            <label>Password</label>
+                            <label name="password">Password</label>
                             <input
                                 type="password"
                                 className="form-control mt-1"
