@@ -1,28 +1,68 @@
-import React from "react"
+import {React, useState} from "react"
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-    // const navigate = useNavigate();
+
+    const [username, setUsername] = useState(null);
+    const [password, setPassword] = useState(null);
+
+    const navigate = useNavigate();
+
+    const handleRegister = async (e) => {
+        e.preventDefault()
+
+        const registerData = {
+            username: username,
+            password: password
+        }
+
+        const options = {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(registerData)
+        }
+        
+        try{
+            
+            const resp = await fetch("http://127.0.0.1:5000/login", options);
+            if (resp.status === 201){
+                alert("Username already exist, please choose a different username")
+            } else {
+                const resp = await fetch("http://127.0.0.1:5000/register", options);
+                console.log(resp.status)
+            }
+            sessionStorage.setItem("username", username)
+            alert("Register success! Head to Login Page")
+            navigate("/login")
+        } catch(err){
+            console.log(err)
+        }
+        
+    }
+
     return (
         <div role="main">
-            <div class="content-section">
-                <form action="" method="POST">
+            <div className="content-section">
+                <form action="" method="POST" onSubmit={handleRegister}>
 
-                    <fieldset class="form-group">
-                        <legend class="border-bottom mb-4">Register to play</legend>
-                        <div class="form-group">
+                    <fieldset className="form-group">
+                        <legend className="border-bottom mb-4">Register to play</legend>
+                        <div className="form-group">
                             <label>Username</label>
                             <input
                                 type="username"
                                 className="form-control mt-1"
                                 placeholder="Enter username"
+                                onChange={(e) => setUsername(e.target.value)}
                             />
                         </div>
-                        <div class="form-group">
+                        <div className="form-group">
                             <label>Password</label>
                             <input
                                 type="password"
                                 className="form-control mt-1"
                                 placeholder="Enter password"
+                                onChange={(e) => setPassword(e.target.value)}
                             />
                         </div>
                         <div class="form-group">
@@ -33,16 +73,16 @@ const Register = () => {
                                 placeholder="Confirm password"
                             />
                         </div>
-                        <div class="form-group">
+                        <div className="form-group">
                             <button type="submit" className="btn btn-primary" role="button" data-testid="submit-btn">Submit</button>
                         </div>
                     </fieldset>
                 </form>
             </div>
 
-            <div class="border-top pt-3">
-                <small class="text-muted">
-                    Already have an account? <a href='/login' class="ml-2">Sign In</a>
+            <div className="border-top pt-3">
+                <small className="text-muted">
+                    Already have an account? <a href='/login' className="ml-2">Sign In</a>
                 </small>
             </div>
 
