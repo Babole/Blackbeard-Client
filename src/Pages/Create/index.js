@@ -62,8 +62,8 @@ const Create = () => {
       <div className="content-section">
         <h1>Create a new Game</h1>
         <form action="" >
-            <label htmlFor="username">Input username: </label>
-            <input type="text" name="username" id="username"></input>
+            {/* <label htmlFor="username">Input username: </label>
+            <input type="text" name="username" id="username"></input> */}
             <label htmlFor="roomID">Create new Room: </label>
             <input type="text" name="roomID" id="roomID"></input>
             <button onClick={handleSubmit}>Submit</button>

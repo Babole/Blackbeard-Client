@@ -27,7 +27,7 @@ const Register = () => {
             // cannot use localhost on Mac
             // AND no 'https' becuase it cannot pass security check
             const resp = await fetch("http://127.0.0.1:5000/login", options);
-            console.log(resp)
+            console.log(resp.status)
             sessionStorage.setItem("username", username)
             navigate("/home")
         } catch(err){

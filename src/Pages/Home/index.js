@@ -4,8 +4,13 @@ const Home = () => {
 
   return (
     <div>
-        <h1>HOME page to select Create a Game or Join a Game</h1>
-      
+
+        <div style={{border: '1px solid black', margin: '3rem', padding: '2rem'}}>
+          <a href="/create">Create New Game</a>
+        </div>
+        <div style={{border: '1px solid black', margin: '3rem', padding: '2rem'}}>
+          <a href="/join">Enter Game</a>
+        </div>
     </div>
   )
 };
