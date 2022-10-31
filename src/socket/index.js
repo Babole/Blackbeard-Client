@@ -5,6 +5,7 @@ const socket = io.connect("http://127.0.0.1:5000")
 
 socket.on("connect", () => {
     console.log(`user connected to the socket id ${socket.id}`);
+    // socket.emit('connect', {data: 'I\'m connected!'})
 });
 
 export { socket };

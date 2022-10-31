@@ -1,61 +1,44 @@
 import {React, useState } from "react"
 import { socket } from '../../socket/index.js'
+import { useNavigate } from "react-router-dom";
 
 const Create = () => {
-    const [room, setRoom] = useState()
-    console.log(room)
-    
-    // useEffect(() => {
-    //     socket.emit("lobby", gameDetails.roomName)
-    //     socket.on("playerData", (players, host) => {
-    //       setPlayerDetails(players)
-    //       setHost(host)
-    //     })
-    //     socket.on("begin", (data) => navigate('/questions', {state: {data, gameDetails}}))
-    //   }, [navigate, gameDetails])
+    const [roomID, setRoomID] = useState()
+    // const [username, setUsername] = useState()
+    console.log(roomID)
+    const navigate = useNavigate()
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        let username = document.getElementById('username').value
+        const username = sessionStorage.getItem('username')
+        // setUsername(username)
         let roomID = document.getElementById('roomID').value
+        setRoomID(roomID)
         const gameDetails =  {
             roomID: roomID,
-            username: username,
+            host: username,
         }
         console.log(gameDetails)
-        sessionStorage.setItem("roomID", roomID)
-        sessionStorage.setItem("username", username)
         //  Check if room ID is available
         if (roomID !== "") {
-            socket.emit("create", gameDetails, (res) => {
+          socket.emit("create", gameDetails, (req) => {
             
-            console.log("socket response", res);
+            console.log("socket response");
+            sessionStorage.setItem("roomID", roomID)
+            sessionStorage.setItem("username", username)
     
-            if (res.code === "success") {
-                console.log(`redirect user to Lobby`)
+            // if (res.code === "success") {
+            //     console.log(`redirect user to Lobby`)
                 
-                // Navigate('/lobby', {state: {gameDetails}})
-            } else {
-                setRoom('');
-            }
+                navigate('/lobby', {state: {gameDetails}})
+            // } else {
+            //     setRoomID('');
+            // }
             })
+        } else {
+          alert('please input a room ID')
         }
-        createRoom()
     }
-
-    function createRoom(){
-        let username = document.getElementById('username').value
-        let roomID = document.getElementById('roomID').value
-        const data = {}
-        data.roomID = roomID
-        data.creator= username
-        console.log(data)
-        
-        socket.emit("create", data)
-        username.value = ''
-        roomID.value = ''
-    }
-    
 
   return (
     <div>
