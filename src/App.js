@@ -1,5 +1,5 @@
 import './App.css';
-import { Login, Register, Home, Create, Join, Lobby, GamePage } from './pages'
+import { Login, Register, Home, Create, Join, Lobby, GamePage } from './Pages'
 
 import { Routes, Route } from 'react-router-dom'
 
