@@ -1,7 +1,9 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { Routes, Route } from 'react-router-dom'
+
 import './App.css';
 import { Login, Register, Home, Create, Join, Lobby, GamePage } from './pages'
-
-import { Routes, Route } from 'react-router-dom'
+import { storeSocket } from './actions/gameStateActions'
 
 function App() {
   return (
