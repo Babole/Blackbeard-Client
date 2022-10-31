@@ -9,6 +9,7 @@ var gameOver = false;
 const canvasW = window.innerWidth
 const canvasH = window.innerWidth/3
 let player = {}
+let reflect
 
 class GameScene extends Phaser.Scene {
 
@@ -16,6 +17,7 @@ class GameScene extends Phaser.Scene {
         //environment assets
         this.load.image('sky', '/assets/bgImg.png');
         this.load.spritesheet('terrain', '/assets/terrain.png', { frameWidth: 32, frameHeight: 32 })
+        this.load.spritesheet('water-reflectL', '/assets/waterReflectL.png', { frameWidth: 170, frameHeight: 10 })
 
         //character sprites
         this.load.spritesheet('crabby-idle', 'assets/characters/crabby/idle.png', { frameWidth: 72, frameHeight: 29 });
@@ -25,9 +27,12 @@ class GameScene extends Phaser.Scene {
     }
 
     create() {
-        let bg = this.add.image(canvasW/2, canvasH/2-40, 'sky').setScale(5);
+        let bg = this.add.image(canvasW/2, canvasH/2-40, 'sky');
         bg.displayWidth = canvasW
         bg.displayHeight = canvasH
+
+        reflect = this.physics.add.staticGroup();
+        reflect.reflectL = this.add.sprite(canvasW/2, canvasH/1.5, 'water-reflectL').setScale(canvasW/500)
 
         platforms = this.physics.add.staticGroup();
 
@@ -75,6 +80,18 @@ class GameScene extends Phaser.Scene {
             platforms.children.entries[26+m].body.setSize(platforms.children.entries[m].displayWidth,platforms.children.entries[m].displayHeight)
         }
 
+        //inner terrain 
+        for (var n = 0; n < 5; n++) {
+            if (n < 3) {
+                platforms.create(canvasW/18 * (7+n), canvasH - canvasW/18*2, 'terrain', n).setOrigin(0)
+            } else {
+                platforms.create(canvasW/18 * 13, canvasH - canvasW/18*(6-n), 'terrain', 4+17*(n-3)).setOrigin(0)
+            }
+            platforms.children.entries[44+n].setDisplaySize(canvasW/18,canvasW/18)
+            platforms.children.entries[44+n].body.setSize(platforms.children.entries[n].displayWidth,platforms.children.entries[n].displayHeight)
+        }
+
+        //sprite
         player.sprite = this.physics.add.sprite(canvasW/2, canvasH - platforms.children.entries[1].displayHeight*2, 'crabby-idle')
         player.sprite.setScale(canvasW/500)
         if (player.sprite.displayWidth < 300){
@@ -113,6 +130,13 @@ class GameScene extends Phaser.Scene {
             frameRate: 20
         });
 
+        this.anims.create({
+            key: 'reflectL',
+            frames: this.anims.generateFrameNumbers('water-reflectL', { start: 0, end: 3 }),
+            frameRate: 10,
+            repeat: -1
+        });
+
         //  Input Events
         cursors = this.input.keyboard.createCursorKeys();
 
@@ -120,6 +144,7 @@ class GameScene extends Phaser.Scene {
         this.physics.add.collider(player.sprite, platforms);
 
         this.game.events.emit("READY", true)
+        console.log(player)
     }
 
     update() {
@@ -128,7 +153,7 @@ class GameScene extends Phaser.Scene {
         }
 
         movePlayer(cursors, player.sprite, canvasW);
-        animateMovement(cursors, player.sprite);
+        animateMovement(cursors, { player: player.sprite, reflect: reflect });
     }
 
 }
