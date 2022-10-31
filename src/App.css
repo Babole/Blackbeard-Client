@@ -1,8 +1,22 @@
 body {
-  background: rgb(51, 50, 61);
+  background-image: url(https://img.itch.zone/aW1nLzQyMDM3MzMucG5n/original/HyJLM5.png);
+  background-repeat: repeat;
+  background-position: 50% 0;
+  background-attachment: fixed;
+  color: rgb(51, 50, 61);
   margin: 0;
   display: grid;
   place-items: center;
   min-height: 100vh;
   overflow: hidden;
+}
+
+canvas {
+  border-radius: 12px;
+}
+
+.box {
+  border: 1px solid black;
+  margin: 3rem;
+  padding: 2rem;
 }

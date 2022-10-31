@@ -4,6 +4,7 @@ import { GameScene } from '../../game/index'
 
 
 const GamePage = () => {
+    document.body.style = 'background: rgb(51, 50, 61);';
 
     const [isReady, setReady] = useState(false)
 
