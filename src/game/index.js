@@ -144,7 +144,6 @@ class GameScene extends Phaser.Scene {
         this.physics.add.collider(player.sprite, platforms);
 
         this.game.events.emit("READY", true)
-        console.log(player)
     }
 
     update() {
