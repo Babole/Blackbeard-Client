@@ -4,7 +4,7 @@ import Login from './index';
 describe('Pages/Login', () => {
     const handleSubmit = jest.fn()
     beforeEach(() => {
-        render(<Login onSubmit={handleSubmit} />);
+        routerRender(<Login onSubmit={handleSubmit} />);
         // render(<Login />);
     })
       

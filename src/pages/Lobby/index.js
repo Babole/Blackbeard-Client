@@ -43,7 +43,7 @@ const Lobby = () => {
 
 
   return (
-    <div>
+    <div role="main">
       <h1>Welcome to Room {roomID}</h1>
       <h2>Host: {hostName}</h2>
       <h2>Players: </h2>

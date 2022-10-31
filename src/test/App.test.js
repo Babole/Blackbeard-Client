@@ -4,11 +4,7 @@ import App from '../App';
 
 describe('App', () => {
   beforeEach(() => {
-    render(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    )
+    routerRender(<App />)
   })
 
   test('Renders the app', () => {
