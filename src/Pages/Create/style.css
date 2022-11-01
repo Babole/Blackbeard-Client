@@ -1,6 +1,6 @@
-.menu-img {
+.menu-img-l {
   image-rendering: pixelated;
-    background-image: url("menu.png");
+    background-image: url("menuL.png");
     min-width: 100%;
     min-height: 100px;
     padding: 20px;
@@ -8,7 +8,7 @@
     background-repeat: no-repeat;
   }
 
-.container-home {
+.container-create {
   text-align: center;
-  padding: 50px;
+  padding: 35px;
 }

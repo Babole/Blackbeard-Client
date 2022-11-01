@@ -2,6 +2,8 @@ import {React } from "react"
 import { socket } from '../../socket/index.js'
 import { useNavigate } from "react-router-dom";
 
+import './style.css'
+
 const Join = () => {
     // const [roomID, setRoomID] = useState()
     // const [username, setUsername] = useState()
@@ -40,8 +42,8 @@ const Join = () => {
     }
 
   return (
-    <div role="main">
-      <div className="content-section">
+    <div className="menu-img-l" role="main">
+      <div className="content-section container-join">
         <h1>Join a Game</h1>
         <form action="" >
             <label htmlFor="roomID">Input Room ID: </label>

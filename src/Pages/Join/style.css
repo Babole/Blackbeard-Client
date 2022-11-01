@@ -1,0 +1,14 @@
+.menu-img-l {
+  image-rendering: pixelated;
+  background-image: url("menuL.png");
+  min-width: 100%;
+  min-height: 100px;
+  padding: 20px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.container-join {
+  text-align: center;
+  padding: 105px;
+}
