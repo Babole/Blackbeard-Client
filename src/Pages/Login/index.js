@@ -38,7 +38,7 @@ const Login = () => {
   return (
         <div role="main">
             <div className="content-section">
-                <form action="" method="POST" role="form" onSubmit={handleLogin}>
+                <form action="" method="POST" onSubmit={handleLogin}>
 
                     <fieldset className="form-group">
                         <legend className="border-bottom mb-4">Login to play</legend>
@@ -62,7 +62,7 @@ const Login = () => {
                             />
                         </div>
                         <div className="form-group">
-                            <button type="submit" className="btn btn-primary" role="button" data-testid="submit-btn">Submit</button>
+                            <button type="submit" className="btn btn-primary" data-testid="submit-btn">Submit</button>
                         </div>
                     </fieldset>
                 </form>

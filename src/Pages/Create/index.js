@@ -41,7 +41,7 @@ const Create = () => {
     }
 
   return (
-    <div>
+    <div role="main">
       <div className="content-section">
         <h1>Create a new Game</h1>
         <form action="" >

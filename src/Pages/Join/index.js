@@ -40,7 +40,7 @@ const Join = () => {
     }
 
   return (
-    <div>
+    <div role="main">
       <div className="content-section">
         <h1>Join a Game</h1>
         <form action="" >
