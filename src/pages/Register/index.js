@@ -41,12 +41,10 @@ const Register = () => {
     }
 
     return (
-        <div role="main">
-            <div className="content-section">
+        <div className="menu-img-thick" role="main">
+            <div className="content-section container-reg">
                 <form action="" method="POST" onSubmit={handleRegister}>
-
-                    <fieldset className="form-group">
-                        <legend className="border-bottom mb-4">Register to play</legend>
+                        <h3>REGISTER</h3>
                         <div className="form-group">
                             <label name="username">Username</label>
                             <input
@@ -74,17 +72,16 @@ const Register = () => {
                             />
                         </div>
                         <div className="form-group">
-                            <button type="submit" className="btn btn-primary" role="button" data-testid="submit-btn">Submit</button>
+                            <button type="submit" className="btn btn-primary" data-testid="submit-btn">Submit</button>
                         </div>
-                    </fieldset>
                 </form>
-            </div>
-
-            <div className="border-top pt-3">
+            <div>
                 <small className="text-muted">
                     Already have an account? <a href='/login' className="ml-2">Sign In</a>
                 </small>
             </div>
+            </div>
+
 
         </div>
     )
