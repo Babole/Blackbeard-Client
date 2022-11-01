@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 
 import './App.css';
+
 import { Login, Register, Home, Create, Join, Lobby, GamePage, Scoreboard } from './pages'
 import { storeSocket } from './actions/gameStateActions'
 
@@ -26,7 +27,8 @@ function App() {
   }, [])
 
   return (
-    <div role="application">
+  <>
+    <div className='app' role="application">
       <Routes>
 
         <Route path='/' element={<Login />} />
@@ -39,6 +41,8 @@ function App() {
         <Route path='/Scoreboard' element={<Scoreboard />} />
       </Routes>
     </div>
+  </>
+
   );
 }
 
