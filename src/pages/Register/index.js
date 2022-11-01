@@ -46,7 +46,7 @@ const Register = () => {
                 <form action="" method="POST" onSubmit={handleRegister}>
                         <h3>REGISTER</h3>
                         <div className="form-group">
-                            <label name="username">Username</label>
+                            <label aria-label="username" name="username">Username</label>
                             <input
                                 type="username"
                                 className="form-control mt-1"
@@ -55,7 +55,7 @@ const Register = () => {
                             />
                         </div>
                         <div className="form-group">
-                            <label name="password">Password</label>
+                            <label name="password" aria-label="password" >Password</label>
                             <input
                                 type="password"
                                 className="form-control mt-1"
@@ -64,7 +64,9 @@ const Register = () => {
                             />
                         </div>
                         <div class="form-group">
-                            <label name="confirm_password">Confirm Password</label>
+                            <label name="confirm_password"
+                            aria-label="confirm password"
+                            >Confirm Password</label>
                             <input
                                 type="password"
                                 className="form-control mt-1"
@@ -76,7 +78,7 @@ const Register = () => {
                         </div>
                 </form>
             <div>
-                <small className="text-muted">
+                <small className="text-muted" data-testid="redirect-btn">
                     Already have an account? <a href='/login' className="ml-2">Sign In</a>
                 </small>
             </div>

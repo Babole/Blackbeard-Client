@@ -43,13 +43,14 @@ const Create = () => {
   return (
     <div className="menu-img-l" role="main">
       <div className="content-section container-create">
-        <h1>Create a new Game</h1>
+        <h1 data-testid="title">Create a new Game</h1>
         <form action="" >
             {/* <label htmlFor="username">Input username: </label>
             <input type="text" name="username" id="username"></input> */}
-            <label htmlFor="roomID">Create new Room: </label>
+            <label htmlFor="roomID" aria-label="roomID" >Create new Room: </label>
             <input type="text" name="roomID" id="roomID"></input>
-            <button onClick={handleSubmit}>Submit</button>
+            <button 
+            onClick={handleSubmit} data-testid="submit-btn">Submit</button>
                 {/* <a href="/lobby" onClick={handleSubmit}> */}
                 {/* Submit</a> */}
                 
