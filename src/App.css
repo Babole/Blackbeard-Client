@@ -11,10 +11,45 @@ body {
   place-items: center;
   min-height: 100vh;
   overflow: hidden;
+  /* font-family: 'Press Start 2P', cursive; */
 }
 
 canvas {
   border-radius: 12px;
+}
+
+
+.box {
+  border: 1px solid black;
+  margin: 3rem;
+  padding: 2rem;
+}
+
+.scoreboard-text{
+  font-family: 'Press Start 2P', Arial, Helvetica, sans-serif;
+}
+
+.scoreboard-frame{
+  background-image: url('/public/assets/scoreboard_frame.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 47rem;
+  min-width: 30rem;
+}
+
+.scoreboard-btn{
+  background-image: url('/public/assets/button.png');
+  background-size: cover;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  min-height: 3rem;
+  min-width: 6rem;
+}
+
+.scoreboard-btn:hover{
+  cursor: pointer;
+  transform: scale(1.1)
 }
 
 .menu-img {
@@ -72,3 +107,4 @@ canvas {
 .container-reg {
   padding: 15px;
 }
+
