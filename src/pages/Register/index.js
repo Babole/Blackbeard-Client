@@ -74,7 +74,7 @@ const Register = () => {
                             />
                         </div>
                         <div className="form-group">
-                            <button type="submit" className="btn btn-primary" role="button" data-testid="submit-btn">Submit</button>
+                            <button type="submit" className="btn btn-primary" data-testid="submit-btn">Submit</button>
                         </div>
                     </fieldset>
                 </form>

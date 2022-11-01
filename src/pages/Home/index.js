@@ -5,10 +5,10 @@ const Home = () => {
   return (
     <div role="main">
 
-        <div style={{border: '1px solid black', margin: '3rem', padding: '2rem'}}>
+        <div className="box">
           <a href="/create">Create New Game</a>
         </div>
-        <div style={{border: '1px solid black', margin: '3rem', padding: '2rem'}}>
+        <div className="box">
           <a href="/join">Enter Game</a>
         </div>
     </div>

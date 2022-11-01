@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 
 import './App.css';
-import { Login, Register, Home, Create, Join, Lobby, GamePage } from './pages'
+import { Login, Register, Home, Create, Join, Lobby, GamePage } from './Pages'
 import { storeSocket } from './actions/gameStateActions'
 
 const io = require('socket.io-client')
