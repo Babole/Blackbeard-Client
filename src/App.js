@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import React, { useEffect, useState } from 'react';
 
 import './App.css';
-import { Login, Register, Home, Create, Join, Lobby, GamePage } from './pages'
+import { Login, Register, Home, Create, Join, Lobby, GamePage, Scoreboard } from './pages'
 import { socket } from './socket/index'
 
 function App() {
@@ -46,18 +46,22 @@ function App() {
   }, [gameData])
 
   return (
-    <div role="application">
+  <>
+    <div className='app' role="application">
       <Routes>
 
-        <Route path='/login' element={<Login />} />
+        <Route path='/' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/home' element={<Home />} />
         <Route path='/create' element={<Create />} />
         <Route path='/join' element={<Join />} />
         <Route path='/lobby' element={<Lobby />} />
         <Route path='/game' element={<GamePage />} />
+        <Route path='/Scoreboard' element={<Scoreboard />} />
       </Routes>
     </div>
+  </>
+
   );
 }
 

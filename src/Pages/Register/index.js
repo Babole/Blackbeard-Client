@@ -41,14 +41,12 @@ const Register = () => {
     }
 
     return (
-        <div role="main">
-            <div className="content-section">
+        <div className="menu-img-thick" role="main">
+            <div className="content-section container-reg">
                 <form action="" method="POST" onSubmit={handleRegister}>
-
-                    <fieldset className="form-group">
-                        <legend className="border-bottom mb-4">Register to play</legend>
+                        <h3>REGISTER</h3>
                         <div className="form-group">
-                            <label name="username">Username</label>
+                            <label aria-label="username" name="username">Username</label>
                             <input
                                 type="username"
                                 className="form-control mt-1"
@@ -57,7 +55,7 @@ const Register = () => {
                             />
                         </div>
                         <div className="form-group">
-                            <label name="password">Password</label>
+                            <label name="password" aria-label="password" >Password</label>
                             <input
                                 type="password"
                                 className="form-control mt-1"
@@ -66,7 +64,9 @@ const Register = () => {
                             />
                         </div>
                         <div class="form-group">
-                            <label name="confirm_password">Confirm Password</label>
+                            <label name="confirm_password"
+                            aria-label="confirm password"
+                            >Confirm Password</label>
                             <input
                                 type="password"
                                 className="form-control mt-1"
@@ -76,15 +76,14 @@ const Register = () => {
                         <div className="form-group">
                             <button type="submit" className="btn btn-primary" data-testid="submit-btn">Submit</button>
                         </div>
-                    </fieldset>
                 </form>
-            </div>
-
-            <div className="border-top pt-3">
-                <small className="text-muted">
+            <div>
+                <small className="text-muted" data-testid="redirect-btn">
                     Already have an account? <a href='/login' className="ml-2">Sign In</a>
                 </small>
             </div>
+            </div>
+
 
         </div>
     )
