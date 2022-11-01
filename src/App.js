@@ -1,30 +1,49 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
 
 import './App.css';
-
 import { Login, Register, Home, Create, Join, Lobby, GamePage, Scoreboard } from './pages'
-import { storeSocket } from './actions/gameStateActions'
-
-const io = require('socket.io-client')
-const ENDPOINT = 'https://black-beard-island.herokuapp.com/'
+import { socket } from './socket/index'
 
 function App() {
-  const [socket, setSocket] = useState();
-  const dispatch = useDispatch()
+  const [gameData, setgameData] = useState(0);
 
   useEffect(() => {
-    const newSocket = io(ENDPOINT)
-
-    newSocket.on("connect", () => {
-      console.log(`user connected to the socket id ${newSocket.id}`);
-      // socket.emit('connect', {data: 'I\'m connected!'})
+    socket.on("connect", () => {
+      console.log(`user connected to the socket id ${socket.id}`);
     });
 
-    dispatch(storeSocket(newSocket))
-    setSocket(newSocket)
+    socket.on('disconnect', () => {
+      console.log('socket disconnected')
+    });
+
+    socket.on("change state", (game_Data) => {
+      window.localStorage.setItem("gameData", JSON.stringify(game_Data))
+      window.dispatchEvent(new Event("storage"));
+      setgameData(game_Data)
+    })
+
+    return () => {
+      socket.off('connect');
+      socket.off('disconnect');
+      socket.off('change state');
+    };
+
   }, [])
+
+  useEffect(() => {
+    socket.on("user joining waiting room", (joiningData) => {
+      if (sessionStorage.getItem('username') === gameData.host.user) {
+        let newGameData = { ...gameData }
+        newGameData.players.push(joiningData.player);
+        socket.emit("send state to players", newGameData);
+      }
+    })
+
+    return () => {
+      socket.off('user joining waiting room');
+    }
+  }, [gameData])
 
   return (
   <>
