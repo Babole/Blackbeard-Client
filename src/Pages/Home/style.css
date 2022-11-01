@@ -1,12 +1,12 @@
 .menu-img {
   image-rendering: pixelated;
-    background-image: url("menu.png");
-    min-width: 100%;
-    min-height: 100px;
-    padding: 20px;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
+  background-image: url("menu.png");
+  min-width: 100%;
+  min-height: 100px;
+  padding: 20px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 
 .container-home {
   text-align: center;

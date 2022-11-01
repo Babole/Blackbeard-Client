@@ -37,9 +37,8 @@ const Login = () => {
 
   return (
         <div role="main">
-            <div className="content-section">
+            <div className="content-section menu-img-l">
                 <form action="" method="POST" onSubmit={handleLogin}>
-
                     <fieldset className="form-group">
                         <legend className="border-bottom mb-4">Login to play</legend>
                         <p></p>
