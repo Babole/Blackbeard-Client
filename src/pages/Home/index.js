@@ -4,12 +4,15 @@ const Home = () => {
 
   return (
     <div role="main">
-
-        <div className="box">
-          <a href="/create">Create New Game</a>
+        <div className="menu-img">
+          <div className="container-home">
+            <a href="/create">Create New Game</a>
+          </div>
         </div>
-        <div className="box">
-          <a href="/join">Enter Game</a>
+        <div className="menu-img">
+          <div className="container-home">
+            <a href="/join">Enter Game</a>
+          </div>
         </div>
     </div>
   )
