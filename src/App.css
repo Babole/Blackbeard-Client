@@ -54,7 +54,7 @@ canvas {
 
 .menu-img {
   image-rendering: pixelated;
-  background-image: url("menu.png");
+  background-image: url("./images/menu.png");
   min-width: 100%;
   min-height: 100px;
   width: fit-content;
@@ -65,7 +65,7 @@ canvas {
 
 .menu-img-l {
   image-rendering: pixelated;
-  background-image: url("menuL.png");
+  background-image: url("./images/menuL.png");
   min-width: 100%;
   min-height: 100px;
   padding: 20px;
@@ -75,7 +75,7 @@ canvas {
 
 .menu-img-thick {
   image-rendering: pixelated;
-  background-image: url("menuThick.png");
+  background-image: url("./images/menuThick.png");
   width: 100%;
   /* min-height: 100px; */
   height: auto;

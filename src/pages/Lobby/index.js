@@ -1,6 +1,4 @@
 import { React, useState, useEffect } from "react"
-import { socket } from "../../socket";
-import { useLocation } from 'react-router-dom';
 
 const Lobby = () => {
 
