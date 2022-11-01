@@ -26,18 +26,20 @@ function App() {
   }, [])
 
   return (
-    <div role="application">
-      <Routes>
+    <>
+      <div className='app' role="application">
 
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
-        <Route path='/home' element={<Home />} />
-        <Route path='/create' element={<Create />} />
-        <Route path='/join' element={<Join />} />
-        <Route path='/lobby' element={<Lobby />} />
-        <Route path='/game' element={<GamePage />} />
-      </Routes>
-    </div>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+          <Route path='/create' element={<Create />} />
+          <Route path='/join' element={<Join />} />
+          <Route path='/lobby' element={<Lobby />} />
+          <Route path='/game' element={<GamePage />} />
+        </Routes>
+      </div>
+    </>
   );
 }
 

@@ -41,8 +41,8 @@ const Create = () => {
     }
 
   return (
-    <div role="main">
-      <div className="content-section">
+    <div className="menu-img-l" role="main">
+      <div className="content-section container-create">
         <h1>Create a new Game</h1>
         <form action="" >
             {/* <label htmlFor="username">Input username: </label>
