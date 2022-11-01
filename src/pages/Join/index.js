@@ -2,8 +2,6 @@ import {React } from "react"
 import { socket } from '../../socket/index.js'
 import { useNavigate } from "react-router-dom";
 
-import './style.css'
-
 const Join = () => {
     // const [roomID, setRoomID] = useState()
     // const [username, setUsername] = useState()

@@ -2,8 +2,6 @@ import {React, useState } from "react"
 import { socket } from '../../socket/index.js'
 import { useNavigate } from "react-router-dom";
 
-import './style.css'
-
 const Create = () => {
     const [roomID, setRoomID] = useState()
     // const [username, setUsername] = useState()
