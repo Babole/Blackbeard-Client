@@ -108,3 +108,12 @@ canvas {
   padding: 15px;
 }
 
+.signIn-redirect{
+  text-decoration: underline;
+  color: aliceblue;
+}
+
+.signIn-redirect:hover{
+  color: black;
+  cursor: pointer;
+}
