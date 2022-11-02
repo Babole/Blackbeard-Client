@@ -5,6 +5,32 @@ const Lobby = () => {
 
   const navigate = useNavigate()
   const [gameData, setgameData] = useState(0);
+  const [loading, setLoading] = useState(true)
+  const navigate = useNavigate()
+
+  // check if token is valid
+  useEffect(() => {
+
+    if(!sessionStorage.getItem('token')){
+      navigate("/")
+    } else {
+      const options = { headers: new Headers({ 'Authorization': sessionStorage.getItem('token') }) }
+      // fetch("http://0.0.0.0:5001/token", options)
+      fetch("https://black-beard-island.herokuapp.com/token", options)
+        .then(res => {
+          if (!res.ok){
+            handleLogout()
+          } else {
+            setLoading(false)
+          }
+        })
+      }
+      const handleLogout = () => {
+        sessionStorage.clear();
+        navigate("/")
+      }
+      
+    })
 
   function storageEventHandler() {
     setgameData(JSON.parse(localStorage.getItem('gameData')) || 0)
@@ -31,6 +57,8 @@ const Lobby = () => {
 
   return (
     <>
+    {loading ? <h2>Loading ...</h2> :
+      <>
       <div role="main">
         {
           !!gameData
@@ -52,6 +80,8 @@ const Lobby = () => {
             </>
         }
       </div>
+      </>
+      }
     </>
   )
 };

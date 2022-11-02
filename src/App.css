@@ -63,6 +63,7 @@ button {
   background-size: contain;
   min-width: 100%;
   width: fit-content;
+
   padding: 30px;
   background-position: center;
   background-repeat: no-repeat;
@@ -83,19 +84,20 @@ button {
 
 .menu-img-log {
   image-rendering: pixelated;
-  background-image: url("./images/menuThick.png");
+  background-image: url("./images/menuThickPaper.png");
   background-size: contain;
-  min-width: 130%;
-  padding: 30px;
+  min-width: 120%;
+  /* height: 30rem; */
+  padding: 50px;
   background-position: center;
   background-repeat: no-repeat;
 }
 
 .menu-img-reg {
   image-rendering: pixelated;
-  background-image: url("./images/menuThick.png");
+  background-image: url("./images/menuThickPaper.png");
   background-size: contain;
-  min-width: 130%;
+  min-width: 120%;
   padding: 40px;
   background-position: center;
   background-repeat: no-repeat;
@@ -119,6 +121,7 @@ button {
 }
 
 .form-group > label{
+  font-size: smaller;
   margin: 1rem 0rem;
   margin-right: 1rem;
 }
@@ -130,16 +133,15 @@ button {
 } 
 
 .content-section{
-  padding-left: 1rem;
+  padding-left:10em;
 }
 
 .signInUp-redirect{
   text-decoration: underline;
-  color: aliceblue;
 }
 
 .signInUp-redirect:hover{
-  color: black;
+  color: aliceblue;
   cursor: pointer;
 }
 

@@ -36,6 +36,7 @@ const Login = () => {
                 alert('Wrong username/ password')
             } else if (resp.status === 201){
                 sessionStorage.setItem("username", username)
+                
                 const data = resp.json()
                 data.then((data) => {
                     sessionStorage.setItem("token", data.token)

@@ -29,18 +29,28 @@ const Register = () => {
         
         try{
             
-            // const resp = await fetch("http://127.0.0.1:5000/login", options);
+            // const resp = await fetch("http://0.0.0.0:5001/login", options);
             const resp = await fetch("https://black-beard-island.herokuapp.com/login", options);
             if (resp.status === 201){
                 alert("Username already exist, please choose a different username")
             } else {
-                // const resp = await fetch("http://127.0.0.1:5000/register", options);
+                // const resp = await fetch("http://0.0.0.0:5001/register", options);
                 const resp = await fetch("https://black-beard-island.herokuapp.com/register", options);
                 console.log(resp.status)
+
+                if (resp.status === 201){
+                    alert("Register success! Enjoy the game")
+                    // Skip login page -> grab token from login API -> redirect user to home
+                    const resp = await fetch("https://black-beard-island.herokuapp.com/login", options)
+                    const data = resp.json()
+                    data.then((data) => {
+                        sessionStorage.setItem("token", data.token)
+                    })
+                    sessionStorage.setItem("username", username)
+                    navigate("/home")
+                }
             }
-            sessionStorage.setItem("username", username)
-            alert("Register success! Head to Login Page")
-            navigate("/")
+
         } catch(err){
             console.log(err)
         }
