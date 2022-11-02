@@ -7,7 +7,7 @@ var platforms;
 var cursors;
 var gameOver = false;
 
-const spriteToControl = 'pinkie'
+const spriteToControl = 'toothy'
 const canvasW = window.innerWidth
 const canvasH = window.innerWidth / 3
 let player = {}

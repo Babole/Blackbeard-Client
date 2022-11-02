@@ -1,9 +1,16 @@
-import { React } from "react"
+import { React, useEffect } from "react"
 import { socket } from '../../socket/index.js'
 import { useNavigate } from "react-router-dom";
 
 const Join = () => {
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!!localStorage.getItem('gameData')) {
+      localStorage.clear();
+      window.location.reload();
+    }
+  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault()

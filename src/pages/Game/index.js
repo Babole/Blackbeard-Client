@@ -29,7 +29,7 @@ const GamePage = () => {
                 default: 'arcade',
                 arcade: {
                     gravity: { y: 1.6*window.innerWidth },
-                    debug: true
+                    debug: false
                 }
             },
             pixelArt: true,
