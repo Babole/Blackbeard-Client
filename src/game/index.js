@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { movePlayer } from "./movement"
 import { animateMovement } from './animation'
+import { socket } from '../socket/index'
 
 var platforms;
 var cursors;
@@ -151,7 +152,17 @@ class GameScene extends Phaser.Scene {
             return;
         }
 
-        movePlayer(cursors, player.sprite, canvasW);
+        const playerMoved = movePlayer(cursors, player.sprite, canvasW);
+        if(playerMoved){
+            socket.emit("move", { x: player.sprite.x, y: player.sprite.y })
+            player.movedLastFrame = true
+        } else {
+            if(player.movedLastFrame) {
+                socket.emit("moveEnd")
+            }
+            player.movedLastFrame = false
+        }
+
         animateMovement(cursors, { player: player.sprite, reflect: reflect });
     }
 
