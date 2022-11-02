@@ -16,8 +16,8 @@ const Home = () => {
       navigate("/")
     } else {
       const options = { headers: new Headers({ 'Authorization': sessionStorage.getItem('token') }) }
-      // fetch("http://0.0.0.0:5001/users", options)
-      fetch("https://black-beard-island.herokuapp.com/users", options)
+      // fetch("http://0.0.0.0:5001/token", options)
+      fetch("https://black-beard-island.herokuapp.com/token", options)
         .then(res => {
           if (!res.ok){
             handleLogout()
