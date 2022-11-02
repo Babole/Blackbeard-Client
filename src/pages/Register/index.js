@@ -1,12 +1,17 @@
-import {React, useState} from "react"
+import {React, useEffect, useState} from "react"
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
 
+    const [loading, setLoading] = useState(true)
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
 
     const navigate = useNavigate();
+
+    useEffect(()=>{
+        setLoading(false)
+    },[])
 
     const handleRegister = async (e) => {
         e.preventDefault()
@@ -44,6 +49,8 @@ const Register = () => {
 
     return (
         <div className="menu-img-thick" role="main">
+            {loading? <h2>Loading ...</h2> :
+            <>
             <div className="content-section container-reg">
                 <form action="" method="POST" onSubmit={handleRegister}>
                         <h3>REGISTER</h3>
@@ -80,13 +87,15 @@ const Register = () => {
                         </div>
                 </form>
             <div>
-                <small className="text-muted" data-testid="redirect-btn">
-                    Already have an account? <a href='/login' className="ml-2">Sign In</a>
+                <small className="text-muted" data-testid="redirect-btn"
+                style={{display: 'flex', gap:'1rem', margin: '1rem 0rem'}}>
+                    Already have an account? <small className="signIn-redirect" onClick={() => {navigate('/')}}style={{marginLeft: '1rem'}}>Sign In</small>
                 </small>
             </div>
             </div>
 
-
+            </>
+            }
         </div>
     )
 };
