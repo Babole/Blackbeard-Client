@@ -15,7 +15,7 @@ const Home = () => {
       navigate("/")
     } else {
       const options = { headers: new Headers({ 'Authorization': sessionStorage.getItem('token') }) }
-      fetch("http://0.0.0.0:5001/user", options)
+      fetch("http://0.0.0.0:5001/users", options)
         .then(res => {
           if (!res.ok){
             handleLogout()
