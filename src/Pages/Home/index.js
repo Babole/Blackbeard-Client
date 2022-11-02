@@ -10,6 +10,7 @@ const Home = () => {
   useEffect(() => {
     if (!!localStorage.getItem('gameData')) {
       localStorage.clear();
+      window.location.reload();
     }
   }, [])
 
@@ -25,11 +26,13 @@ const Home = () => {
 
   function handleCreateGame() {
     let roomID = roomIdGenerator()
+    let freeCharacters = ['captain', 'crabby', 'pinkie', 'toothy']
     const gameData = {
       roomID: roomID,
       host: {
         id: socket.id,
-        user: sessionStorage.getItem('username')
+        user: sessionStorage.getItem('username'),
+        character: freeCharacters[Math.floor(Math.random() * (freeCharacters.length - 0))]
       },
       players: []
     }
