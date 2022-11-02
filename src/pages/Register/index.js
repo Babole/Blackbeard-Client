@@ -40,7 +40,7 @@ const Register = () => {
             }
             sessionStorage.setItem("username", username)
             alert("Register success! Head to Login Page")
-            navigate("/login")
+            navigate("/")
         } catch(err){
             console.log(err)
         }
@@ -48,11 +48,14 @@ const Register = () => {
     }
 
     return (
-        <div className="menu-img-thick" role="main">
+        <div style={{display: 'flex', justifyContent:'center'}}>
+        <div className="menu-img-reg" role="main">
             {loading? <h2>Loading ...</h2> :
             <>
-            <div className="content-section container-reg">
-                <form action="" method="POST" onSubmit={handleRegister}>
+            <div className="content-section container-reg"
+               style={{paddingBottom: '1.3rem'}} 
+            >
+                <form action="" method="POST" onSubmit={handleRegister} style={{paddingTop: '2rem'}}>
                         <h3>REGISTER</h3>
                         <div className="form-group">
                             <label aria-label="username" name="username">Username</label>
@@ -82,20 +85,22 @@ const Register = () => {
                                 placeholder="Confirm password"
                             />
                         </div>
-                        <div className="form-group">
+                        <div className="form-group" style={{margin: '0.5rem 0rem'}}>
                             <button type="submit" className="btn btn-primary" data-testid="submit-btn">Submit</button>
                         </div>
                 </form>
             <div>
                 <small className="text-muted" data-testid="redirect-btn"
                 style={{display: 'flex', gap:'1rem', margin: '1rem 0rem'}}>
-                    Already have an account? <small className="signIn-redirect" onClick={() => {navigate('/')}}style={{marginLeft: '1rem'}}>Sign In</small>
+                    Already have an account? <small className="signInUp-redirect" onClick={() => {navigate('/')}}style={{marginLeft: '1rem'}}>Sign In</small>
+
                 </small>
             </div>
             </div>
 
             </>
             }
+        </div>
         </div>
     )
 };

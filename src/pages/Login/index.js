@@ -45,7 +45,8 @@ const Login = () => {
     }
 
     return (
-        <div className="menu-img-thick" role="main">
+        <div style={{display: 'flex', justifyContent:'center'}}>
+        <div className="menu-img-log" role="main">
             <div className="content-section container-login">
                 <form action="" method="POST" onSubmit={handleLogin}>
                     <h3>LOGIN</h3>
@@ -68,16 +69,19 @@ const Login = () => {
                         />
                     </div>
                     <div className="form-group">
-                        <button type="submit" className="btn btn-primary" data-testid="submit-btn">Submit</button>
+                        <button type="submit" className="btn btn-primary" data-testid="submit-btn" >Submit</button>
                     </div>
                     <div>
-                        <small className="text-muted">
-                            Don't have have an account? <a className="ml-2" href="/register">Sign Up</a>
+                        <small className="text-muted" data-testid="redirect-btn"
+                        
+                        >
+                            Don't have an account? <small className="signInUp-redirect" onClick={() => {navigate('/Register')}}style={{marginLeft: '1rem'}}>Sign Up</small>
                         </small>
                     </div>
                 </form>
             </div>
 
+        </div>
         </div>
     )
 
