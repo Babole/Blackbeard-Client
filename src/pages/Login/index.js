@@ -25,7 +25,8 @@ const Login = () => {
         try {
             // cannot use localhost on Mac
             // AND no 'https' becuase it cannot pass security check
-            const resp = await fetch("http://0.0.0.0:5001/login", options);
+            // const resp = await fetch("http://0.0.0.0:5001/login", options);
+            const resp = await fetch("https://black-beard-island.herokuapp.com/login", options);
 
             if (resp.status === 401){
                 alert('Wrong username/ password')
