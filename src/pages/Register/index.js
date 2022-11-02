@@ -24,11 +24,13 @@ const Register = () => {
         
         try{
             
-            const resp = await fetch("http://127.0.0.1:5000/login", options);
+            // const resp = await fetch("http://127.0.0.1:5000/login", options);
+            const resp = await fetch("https://black-beard-island.herokuapp.com/login", options);
             if (resp.status === 201){
                 alert("Username already exist, please choose a different username")
             } else {
-                const resp = await fetch("http://127.0.0.1:5000/register", options);
+                // const resp = await fetch("http://127.0.0.1:5000/register", options);
+                const resp = await fetch("https://black-beard-island.herokuapp.com/register", options);
                 console.log(resp.status)
             }
             sessionStorage.setItem("username", username)

@@ -1,9 +1,33 @@
-import { React } from "react"
+import { React, useState, useEffect } from "react"
 import { socket } from '../../socket/index.js'
 import { useNavigate } from "react-router-dom";
 
 const Join = () => {
+  const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
+
+  // check if token is valid
+  useEffect(() => {
+    if(!sessionStorage.getItem('token')){
+      navigate("/")
+    } else {
+      const options = { headers: new Headers({ 'Authorization': sessionStorage.getItem('token') }) }
+      // fetch("http://0.0.0.0:5001/users", options)
+      fetch("https://black-beard-island.herokuapp.com/users", options)
+        .then(res => {
+          if (!res.ok){
+            handleLogout()
+          } else{
+            setLoading(false)
+          }
+        })
+      }
+      const handleLogout = () => {
+        sessionStorage.clear();
+        navigate("/")
+      }
+      
+    })
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -26,9 +50,11 @@ const Join = () => {
   }
 
   return (
-    <div role="main">
+    <div className="menu-img-l" role="main">
       <div className='scoreboard-btn scoreboard-text' style={{ position: 'fixed', right: '6rem', top: '3.5rem' }} onClick={() => { navigate('/home') }}>Home</div>
-      <div className="content-section menu-img-l">
+      <div className="content-section container-join">
+        {loading? <h2>Loading ...</h2> :
+        <>
         <h1>Join a Game</h1>
         <form action="" >
           <label htmlFor="roomID">Input Room ID: </label>
@@ -36,6 +62,8 @@ const Join = () => {
           <button onClick={handleSubmit}>Join</button>
 
         </form>
+        </>
+        }
       </div>
     </div>
   )
