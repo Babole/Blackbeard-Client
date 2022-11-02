@@ -26,8 +26,9 @@ const Join = () => {
   }
 
   return (
-    <div className="menu-img-l" role="main">
-      <div className="content-section container-join">
+    <div role="main">
+      <div className='scoreboard-btn scoreboard-text' style={{ position: 'fixed', right: '6rem', top: '3.5rem' }} onClick={() => { navigate('/home') }}>Home</div>
+      <div className="content-section menu-img-l">
         <h1>Join a Game</h1>
         <form action="" >
           <label htmlFor="roomID">Input Room ID: </label>

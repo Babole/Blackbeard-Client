@@ -18,6 +18,10 @@ canvas {
   border-radius: 12px;
 }
 
+button {
+  font-family: 'Press Start 2P', cursive;
+}
+
 
 .box {
   border: 1px solid black;
@@ -25,11 +29,11 @@ canvas {
   padding: 2rem;
 }
 
-.scoreboard-text{
+.scoreboard-text {
   font-family: 'Press Start 2P', Arial, Helvetica, sans-serif;
 }
 
-.scoreboard-frame{
+.scoreboard-frame {
   background-image: url('/public/assets/scoreboard_frame.png');
   background-repeat: no-repeat;
   background-size: cover;
@@ -37,7 +41,8 @@ canvas {
   min-width: 30rem;
 }
 
-.scoreboard-btn{
+.scoreboard-btn {
+  image-rendering: pixelated;
   background-image: url('/public/assets/button.png');
   background-size: cover;
   justify-content: center;
@@ -47,7 +52,7 @@ canvas {
   min-width: 6rem;
 }
 
-.scoreboard-btn:hover{
+.scoreboard-btn:hover {
   cursor: pointer;
   transform: scale(1.1)
 }
@@ -55,56 +60,62 @@ canvas {
 .menu-img {
   image-rendering: pixelated;
   background-image: url("./images/menu.png");
+  background-size: contain;
   min-width: 100%;
-  min-height: 100px;
   width: fit-content;
-  padding: 20px;
+  padding: 30px;
   background-position: center;
   background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
 }
 
 .menu-img-l {
   image-rendering: pixelated;
   background-image: url("./images/menuL.png");
+  background-size: contain;
   min-width: 100%;
-  min-height: 100px;
-  padding: 20px;
+  width: fit-content;
+  padding: 60px;
   background-position: center;
   background-repeat: no-repeat;
 }
 
-.menu-img-thick {
+.menu-img-log {
   image-rendering: pixelated;
   background-image: url("./images/menuThick.png");
-  width: 100%;
-  /* min-height: 100px; */
-  height: auto;
-  object-fit: contain;
-  padding: 20px;
+  background-size: cover;
+  min-width: 100%;
+  padding: 30px;
   background-position: center;
   background-repeat: no-repeat;
 }
 
-.container-home {
-  text-align: center;
-  padding: 50px;
+.menu-img-reg {
+  image-rendering: pixelated;
+  background-image: url("./images/menuThick.png");
+  background-size: contain;
+  min-width: 100%;
+  padding: 40px;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
-.container-create {
-  text-align: center;
-  padding: 35px;
+.home-btn {
+  background-image: url('/public/assets/button.png');
+  image-rendering: pixelated;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 7rem;
+  width: 15rem;
+  margin: 10px;
 }
 
-.container-join {
-  text-align: center;
-  padding: 105px;
+.home-btn:hover {
+  cursor: pointer;
+  transform: scale(1.1)
 }
-
-.container-login {
-  padding: 5px;
-}
-
-.container-reg {
-  padding: 15px;
-}
-

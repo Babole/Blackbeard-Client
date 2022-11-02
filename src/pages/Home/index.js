@@ -43,13 +43,9 @@ const Home = () => {
 
   return (
     <div role="main">
-
-      <div className="box">
-        <button className='create' onClick={handleCreateGame}>CreateGame</button>
-      </div>
-      <div className="box">
-        <button className='join' onClick={handleJoinGame}>JoinGame</button>
-      </div>
+      <div className='create home-btn' onClick={handleCreateGame}>Create Game</div>
+      <div className='join home-btn' onClick={handleJoinGame}>Join Game</div>
+      <div className='scores home-btn' onClick={ () => { navigate('/scoreboard') } }>Leaderboard</div>
     </div>
   )
 };
