@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import React, { useEffect, useState } from 'react';
 
 import './App.css';
-import { Login, Register, Home, Join, Lobby, GamePage, Scoreboard } from './pages'
+import { Login, Register, Home, Join, Lobby, GamePage, Scoreboard, Error } from './pages'
 import { socket } from './socket/index'
 
 function App() {
@@ -57,6 +57,7 @@ function App() {
         <Route path='/lobby' element={<Lobby />} />
         <Route path='/game' element={<GamePage />} />
         <Route path='/scoreboard' element={<Scoreboard />} />
+        <Route path='*' element={<Error />} />
       </Routes>
     </div>
   </>
