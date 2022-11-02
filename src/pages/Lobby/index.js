@@ -6,7 +6,6 @@ const Lobby = () => {
   const navigate = useNavigate()
   const [gameData, setgameData] = useState(0);
   const [loading, setLoading] = useState(true)
-  const navigate = useNavigate()
 
   // check if token is valid
   useEffect(() => {
