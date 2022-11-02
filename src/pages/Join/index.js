@@ -1,4 +1,6 @@
+
 import { React, useState, useEffect } from "react"
+
 import { socket } from '../../socket/index.js'
 import { useNavigate } from "react-router-dom";
 
@@ -29,6 +31,13 @@ const Join = () => {
       }
       
     })
+
+  useEffect(() => {
+    if (!!localStorage.getItem('gameData')) {
+      localStorage.clear();
+      window.location.reload();
+    }
+  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault()
