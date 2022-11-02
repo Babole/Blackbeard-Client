@@ -67,7 +67,7 @@ const Scoreboard = () => {
         >Scoreboard</h1>
         <h3 className="scoreboard-text" style={{textAlign: 'center'}}>Games Won</h3>
 
-        <div className='scoreboard-btn scoreboard-text' style={{position: 'fixed', right:'6rem', top: '3.5rem'}} onClick={ () => {navigate('/home')}}>Home</div>
+        <div className='scoreboard-btn scoreboard-text' style={{position: 'fixed', right:'6rem', top: '3.5rem'}} onClick={ () => { navigate('/home') } }>Home</div>
 
         <div className="scoreboard-frame">
             <div style={{paddingTop: '7em'}}>

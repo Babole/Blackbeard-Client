@@ -70,22 +70,18 @@ const Home = () => {
   }
 
   const renderPage = () => {
-    return(
-      <>
-      <div className="box">
-        <button className='create' onClick={handleCreateGame}>CreateGame</button>
-      </div>
-      <div className="box">
-        <button className='join' onClick={handleJoinGame}>JoinGame</button>
-      </div>
-      </>
+  return (
+    <div role="main">
+      <div className='create home-btn' onClick={handleCreateGame}>Create Game</div>
+      <div className='join home-btn' onClick={handleJoinGame}>Join Game</div>
+      <div className='scores home-btn' onClick={ () => { navigate('/scoreboard') } }>Leaderboard</div>
+    </div>
     )
   }
 
   return (
     <div role="main">
       {loading ? <h2>Loading ... </h2> : renderPage()}
-      
     </div>
   )
 };

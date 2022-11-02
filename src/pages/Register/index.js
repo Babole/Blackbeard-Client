@@ -35,7 +35,7 @@ const Register = () => {
             }
             sessionStorage.setItem("username", username)
             alert("Register success! Head to Login Page")
-            navigate("/login")
+            navigate("/")
         } catch(err){
             console.log(err)
         }
@@ -43,7 +43,7 @@ const Register = () => {
     }
 
     return (
-        <div className="menu-img-thick" role="main">
+        <div className="menu-img-reg" role="main">
             <div className="content-section container-reg">
                 <form action="" method="POST" onSubmit={handleRegister}>
                         <h3>REGISTER</h3>
@@ -81,7 +81,7 @@ const Register = () => {
                 </form>
             <div>
                 <small className="text-muted" data-testid="redirect-btn">
-                    Already have an account? <a href='/login' className="ml-2">Sign In</a>
+                    Already have an account? <a href='/' className="ml-2">Sign In</a>
                 </small>
             </div>
             </div>

@@ -45,7 +45,7 @@ const Login = () => {
     }
 
     return (
-        <div className="menu-img-thick" role="main">
+        <div className="menu-img-log" role="main">
             <div className="content-section container-login">
                 <form action="" method="POST" onSubmit={handleLogin}>
                     <h3>LOGIN</h3>
