@@ -25,10 +25,33 @@ function App() {
       setgameData(game_Data)
       if (!!game_Data.gameStarted && !game_Data.players.length) {
         console.log(game_Data.host.user + ' is the winner!')
-        alert('You won!')
-        window.location.href = '/home'
+        handleAddScore(game_Data.host.user)
       }
     })
+
+    const handleAddScore = async (winner_username) => {
+      try {
+        const headers = new Headers()
+        headers.append('Authorization', sessionStorage.getItem('token'))
+        headers.append("Content-Type", "application/json")
+        const winner = {
+          method: "POST",
+          headers: headers,
+          body: JSON.stringify({username: winner_username})
+        }
+        const resp = await fetch("https://black-beard-island.herokuapp.com/gameover", winner)
+  
+        if (resp.status === 201) {
+          alert('You won!')
+          window.location.href = '/scoreboard'
+        } else {
+          alert('Unable to add score')
+          window.location.href = '/home'
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    }
 
     return () => {
       socket.off('connect');
@@ -50,7 +73,7 @@ function App() {
           newGameData.players.forEach(player => assignedCharacters.push(player.character))
           freeCharacters = freeCharacters.filter(val => !assignedCharacters.includes(val));
 
-          joiningData.player.character = freeCharacters[Math.floor(Math.random() * (freeCharacters.length - 0))]
+          joiningData.player.character = freeCharacters[Math.floor(Math.random() * freeCharacters.length)]
           newGameData.players.push(joiningData.player);
           socket.emit("send state to players", newGameData);
         }
@@ -81,22 +104,24 @@ function App() {
     }
   }, [gameData])
 
-  return (
-  <>
-    <div className='app' role="application">
-      <Routes>
+  
 
-        <Route path='/' element={<Login />} />
-        <Route path='/register' element={<Register />} />
-        <Route path='/home' element={<Home />} />
-        <Route path='/join' element={<Join />} />
-        <Route path='/lobby' element={<Lobby />} />
-        <Route path='/game' element={<GamePage />} />
-        <Route path='/scoreboard' element={<Scoreboard />} />
-        <Route path='*' element={<Error />} />
-      </Routes>
-    </div>
-  </>
+  return (
+    <>
+      <div className='app' role="application">
+        <Routes>
+
+          <Route path='/' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+          <Route path='/home' element={<Home />} />
+          <Route path='/join' element={<Join />} />
+          <Route path='/lobby' element={<Lobby />} />
+          <Route path='/game' element={<GamePage />} />
+          <Route path='/scoreboard' element={<Scoreboard />} />
+          <Route path='*' element={<Error />} />
+        </Routes>
+      </div>
+    </>
 
   );
 }

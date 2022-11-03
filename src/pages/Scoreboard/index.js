@@ -75,7 +75,7 @@ const Scoreboard = () => {
     const descending = data.sort((a,b) => b.games_won - a.games_won)
     const winners = descending.map((player, index) => {
        return(
-        <div aria-label="scoreboard" className="scoreboard-text" style={{border: 'none', borderRadius: '15px', padding: '0rem 2rem', margin: '1rem 6rem'}}>
+        <div key={index+1} aria-label="scoreboard" className="scoreboard-text" style={{border: 'none', borderRadius: '15px', padding: '0rem 2rem', margin: '1rem 6rem'}}>
             <h4>{index+1}. &nbsp;{player.username} &nbsp; {player.games_won}</h4>
         </div>
        )
