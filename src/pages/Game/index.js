@@ -10,17 +10,6 @@ const GamePage = () => {
 
     useEffect(() => {
         const config = {
-            //   callbacks: {
-            //     preBoot: game => {
-            //       // A good way to get data state into the game.
-            //       game.registry.merge(someState)
-            //       // This is a good way to catch when that data changes.
-            //       game.registry.events.on("changedata", (par, key, val, prevVal) => {
-            //         // Simply call whatever functions you want outside.
-            //         dataService({ [key]: val })
-            //       })
-            //     },
-            //   },
             type: Phaser.AUTO,
             parent: "phaser-game",
             width: window.innerWidth,
