@@ -77,6 +77,7 @@ const Lobby = () => {
                   <h2>Host: {gameData.host.user} <img src={'assets/characters/' + gameData.host.character + '.png'} alt={gameData.host.character} className="sprite" height={"45"}></img></h2>
                   <h2>Players (max 3): </h2>
                   <h2><ul>{gameData.players.map(user => { return <li key={user.user}>{user.user} <img src={'assets/characters/' + user.character + '.png'} alt={user.character} className="sprite" height={"45"}></img> </li> })}</ul></h2>
+                  
                   {gameData.players.length >= 1
                     ? ifHost()
                     : <p className='game-id'>Two players required to start game...</p>

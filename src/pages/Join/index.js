@@ -9,8 +9,9 @@ const Join = () => {
   const [loading, setLoading] = useState(true)
 
   // check if token is valid
-  useEffect(() => {
 
+  useEffect(() => {
+    /* istanbul ignore next */
     if(!sessionStorage.getItem('token')){
       navigate("/")
     } else {
@@ -25,6 +26,7 @@ const Join = () => {
           }
         })
       }
+      /* istanbul ignore next */
       const handleLogout = () => {
         sessionStorage.clear();
         navigate("/")
@@ -32,6 +34,7 @@ const Join = () => {
       
     })
 
+  /* istanbul ignore next */
   useEffect(() => {
     if (!!localStorage.getItem('gameData')) {
       localStorage.clear();
@@ -39,11 +42,13 @@ const Join = () => {
     }
   }, [])
 
+  /* istanbul ignore next */
   const handleSubmit = (e) => {
     e.preventDefault()
     const roomID = document.getElementById('roomID').value
 
     //  Check if room ID is available
+    /* istanbul ignore next */
     if (roomID.length === 6) {
       const joiningData = {
         roomID: roomID,
@@ -70,7 +75,7 @@ const Join = () => {
         <form action="" >
           <label htmlFor="roomID">Input Room ID: </label>
           <input type="text" name="roomID" id="roomID"></input>
-          <button onClick={handleSubmit}>Join</button>
+          <button aria-label="Join" onClick={handleSubmit}>Join</button>
 
         </form>
       </div>
