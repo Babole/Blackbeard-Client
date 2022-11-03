@@ -50,10 +50,13 @@ const Login = () => {
     }
 
     return (
+        
+        <>
+        {loading? <h2 aria-label="loading">Loading ...</h2> :
+        <>
+        <h2 style={{color:'#282828', marginBottom:'4rem'}}>Welcome to Blackbeard's Island</h2>
         <div style={{display: 'flex', justifyContent:'center', alignItems:'center'}} >
         <div className="menu-img-log" role="main">
-        {loading? <h2 aria-label="loading">Loading ...</h2> :
-            <>
             <div className="content-section container-login">
                 <form action="" method="POST" onSubmit={handleLogin} data-testid='login form'>
                     <h3>LOGIN</h3>
@@ -89,10 +92,12 @@ const Login = () => {
                 </form>
             </div>
 
-            </>
-            }
+            
         </div>
         </div>
+        </>
+        }
+        </>
     )
 
 };
