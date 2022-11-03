@@ -7,25 +7,25 @@ const Home = () => {
 
   
   const navigate = useNavigate()
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
 
   // check if token is valid
   useEffect(() => {
 
-    if(!sessionStorage.getItem('token')){
-      navigate("/")
-    } else {
-      const options = { headers: new Headers({ 'Authorization': sessionStorage.getItem('token') }) }
-      // fetch("http://0.0.0.0:5001/users", options)
-      fetch("https://black-beard-island.herokuapp.com/users", options)
-        .then(res => {
-          if (!res.ok){
-            handleLogout()
-          } else {
-            setLoading(false)
-          }
-        })
-      }
+    // if(!sessionStorage.getItem('token')){
+    //   navigate("/")
+    // } else {
+    //   const options = { headers: new Headers({ 'Authorization': sessionStorage.getItem('token') }) }
+    //   // fetch("http://0.0.0.0:5001/users", options)
+    //   fetch("https://black-beard-island.herokuapp.com/users", options)
+    //     .then(res => {
+    //       if (!res.ok){
+    //         handleLogout()
+    //       } else {
+    //         setLoading(false)
+    //       }
+    //     })
+    //   }
       const handleLogout = () => {
         sessionStorage.clear();
         navigate("/")
@@ -62,7 +62,8 @@ const Home = () => {
         user: sessionStorage.getItem('username'),
         character: freeCharacters[Math.floor(Math.random() * (freeCharacters.length - 0))]
       },
-      players: []
+      players: [],
+      gameStarted: false
     }
     socket.emit("create game", gameData);
     navigate('/lobby')

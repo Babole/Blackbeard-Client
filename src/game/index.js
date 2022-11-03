@@ -3,16 +3,25 @@ import { movePlayer } from "./movement"
 import { animateMovement } from './animation'
 import { socket } from '../socket/index'
 
+let spriteToControl
+let spritesInGame = []
+let playerObject
+let players = {}
+
 var platforms;
 var cursors;
 var gameOver = false;
 
-const spriteToControl = 'toothy'
+let pressedKeys = []
+
 const canvasW = window.innerWidth
 const canvasH = window.innerWidth / 3
-let player = {}
+
+
+let gameData 
+let username 
+
 let reflect
-let playerObject
 
 class GameScene extends Phaser.Scene {
 
@@ -41,6 +50,27 @@ class GameScene extends Phaser.Scene {
         this.load.spritesheet('toothy-idle', 'assets/characters/toothy/idle.png', { frameWidth: 34, frameHeight: 30 });
         this.load.spritesheet('toothy-run', 'assets/characters/toothy/run.png', { frameWidth: 34, frameHeight: 30 });
         this.load.spritesheet('toothy-jump', 'assets/characters/toothy/jump.png', { frameWidth: 34, frameHeight: 30 });
+
+        gameData = JSON.parse(localStorage.getItem('gameData'))
+        username = sessionStorage.getItem('username')
+
+        if (socket.id != localStorage.getItem('previousSocket')) {
+            for (let i = 0; i < gameData.players.length + 1; i++) {
+                if (i < gameData.players.length) {
+                    spritesInGame.push(gameData.players[i].character)
+                    if (gameData.players[i].user === username) {
+                        spriteToControl = gameData.players[i].character
+                    }
+                } else {
+                    spritesInGame.push(gameData.host.character)
+                    if (gameData.host.user === username) {
+                        spriteToControl = gameData.host.character
+                    }
+                }
+            }
+        } else {
+            // window.location.href = '/home'
+        }
     }
 
     create() {
@@ -105,46 +135,54 @@ class GameScene extends Phaser.Scene {
         }
 
         //sprite
-        player.captain = this.physics.add.sprite(canvasW / 2, canvasH - platforms.children.entries[1].displayHeight * 3, 'captain-idle').setScale(canvasW / 500)
-        console.log(player.captain.displayWidth)
-        if (player.captain.displayWidth < 300) {
-            player.captain.body.setSize(player.captain.displayWidth * 0.1, player.captain.displayHeight * 0.1)
-        } else {
-            player.captain.body.setSize(player.captain.displayWidth * 0.05, player.captain.displayHeight * 0.07)
+        if (spritesInGame.includes("captain")) {
+            players.captain = this.physics.add.sprite(canvasW / 2, canvasH - platforms.children.entries[1].displayHeight * 3, 'captain-idle').setScale(canvasW / 500)
+            console.log(players.captain.displayWidth)
+            if (players.captain.displayWidth < 300) {
+                players.captain.body.setSize(players.captain.displayWidth * 0.1, players.captain.displayHeight * 0.1)
+            } else {
+                players.captain.body.setSize(players.captain.displayWidth * 0.05, players.captain.displayHeight * 0.07)
+            }
+
+            players.captain.setCollideWorldBounds(true);
+            this.physics.add.collider(players.captain, platforms);
         }
 
-        player.crabby = this.physics.add.sprite(canvasW / 2, canvasH - platforms.children.entries[1].displayHeight * 3, 'crabby-idle').setScale(canvasW / 500)
-        if (player.crabby.displayWidth < 300) {
-            player.crabby.body.setSize(player.crabby.displayWidth * 0.1, player.crabby.displayHeight * 0.2)
-        } else {
-            player.crabby.body.setSize(player.crabby.displayWidth * 0.05, player.crabby.displayHeight * 0.1)
+        if (spritesInGame.includes("crabby")) {
+            players.crabby = this.physics.add.sprite(canvasW / 2, canvasH - platforms.children.entries[1].displayHeight * 3, 'crabby-idle').setScale(canvasW / 500)
+            if (players.crabby.displayWidth < 300) {
+                players.crabby.body.setSize(players.crabby.displayWidth * 0.1, players.crabby.displayHeight * 0.2)
+            } else {
+                players.crabby.body.setSize(players.crabby.displayWidth * 0.05, players.crabby.displayHeight * 0.1)
+            }
+
+            players.crabby.setCollideWorldBounds(true);
+            this.physics.add.collider(players.crabby, platforms);
         }
 
-        player.pinkie = this.physics.add.sprite(canvasW / 2, canvasH - platforms.children.entries[1].displayHeight * 3, 'pinkie-idle').setScale(canvasW / 500)
-        if (player.pinkie.displayHeight < 150) {
-            player.pinkie.body.setSize(player.pinkie.displayWidth * 0.1, player.pinkie.displayHeight * 0.15)
-        } else {
-            player.pinkie.body.setSize(player.pinkie.displayWidth * 0.1, player.pinkie.displayHeight * 0.1)
+        if (spritesInGame.includes("pinkie")) {
+            players.pinkie = this.physics.add.sprite(canvasW / 2, canvasH - platforms.children.entries[1].displayHeight * 3, 'pinkie-idle').setScale(canvasW / 500)
+            if (players.pinkie.displayHeight < 150) {
+                players.pinkie.body.setSize(players.pinkie.displayWidth * 0.1, players.pinkie.displayHeight * 0.15)
+            } else {
+                players.pinkie.body.setSize(players.pinkie.displayWidth * 0.1, players.pinkie.displayHeight * 0.1)
+            }
+
+            players.pinkie.setCollideWorldBounds(true);
+            this.physics.add.collider(players.pinkie, platforms);
         }
 
-        player.toothy = this.physics.add.sprite(canvasW / 2, canvasH - platforms.children.entries[1].displayHeight * 3, 'toothy-idle').setScale(canvasW / 500)
-        if (player.toothy.displayHeight < 150) {
-            player.toothy.body.setSize(player.toothy.displayWidth * 0.1, player.toothy.displayHeight * 0.15)
-        } else {
-            player.toothy.body.setSize(player.toothy.displayWidth * 0.1, player.toothy.displayHeight * 0.1)
-        }
+        if (spritesInGame.includes("toothy")) {
+            players.toothy = this.physics.add.sprite(canvasW / 2, canvasH - platforms.children.entries[1].displayHeight * 3, 'toothy-idle').setScale(canvasW / 500)
+            if (players.toothy.displayHeight < 150) {
+                players.toothy.body.setSize(players.toothy.displayWidth * 0.1, players.toothy.displayHeight * 0.15)
+            } else {
+                players.toothy.body.setSize(players.toothy.displayWidth * 0.1, players.toothy.displayHeight * 0.1)
+            }
 
-        //  Sprite collisions
-        player.captain.setCollideWorldBounds(true);
-        player.crabby.setCollideWorldBounds(true);
-        player.pinkie.setCollideWorldBounds(true);
-        player.toothy.setCollideWorldBounds(true);
-        
-        this.physics.add.collider(player.captain, platforms);
-        this.physics.add.collider(player.crabby, platforms);
-        this.physics.add.collider(player.pinkie, platforms);
-        this.physics.add.collider(player.toothy, platforms);
-        
+            players.toothy.setCollideWorldBounds(true);
+            this.physics.add.collider(players.toothy, platforms);
+        }
 
         // defining animations
         const animations = [
@@ -256,6 +294,57 @@ class GameScene extends Phaser.Scene {
         cursors = this.input.keyboard.createCursorKeys();
 
         this.game.events.emit("READY", true)
+
+        socket.on('move', (data) => {
+            console.log('recieved move');
+
+            const newX = data.x * canvasW
+            const newY = data.y * canvasH
+            let otherPlayer = getPlayer(data.character)
+
+            function getPlayer(character) {
+                if (character === 'captain') {
+                    return players.captain
+                } else if (character === 'crabby') {
+                    return players.crabby
+                } else if (character === 'pinkie') {
+                    return players.pinkie
+                } else if (character === 'toothy') {
+                    return players.toothy
+                }
+            }
+            
+
+            if (otherPlayer.x > newX) {
+                otherPlayer.flipX = false;
+            } else if (otherPlayer.x < newX) {
+                otherPlayer.flipX = true;
+            }
+
+            otherPlayer.x = newX;
+            otherPlayer.y = newY;
+            otherPlayer.moving = true;
+        });
+
+        socket.on('moveEnd', (data) => {
+            console.log('recieved moveEnd');
+
+            let otherPlayer = getPlayer(data.character)
+
+            function getPlayer(character) {
+                if (character === 'captain') {
+                    return players.captain
+                } else if (character === 'crabby') {
+                    return players.crabby
+                } else if (character === 'pinkie') {
+                    return players.pinkie
+                } else if (character === 'toothy') {
+                    return players.toothy
+                }
+            }
+
+            otherPlayer.moving = false;
+        });
     }
 
     update() {
@@ -263,32 +352,62 @@ class GameScene extends Phaser.Scene {
             return;
         }
 
-        if (spriteToControl === 'captain') {
-            playerObject = player.captain
-        } else if (spriteToControl === 'crabby') {
-            playerObject = player.crabby
-        } else if (spriteToControl === 'pinkie'){
-            playerObject = player.pinkie
-        } else if (spriteToControl === 'toothy'){
-            playerObject = player.toothy
+        if (!!spriteToControl) {
+            if (spriteToControl === 'captain') {
+                playerObject = players.captain
+            } else if (spriteToControl === 'crabby') {
+                playerObject = players.crabby
+            } else if (spriteToControl === 'pinkie') {
+                playerObject = players.pinkie
+            } else if (spriteToControl === 'toothy') {
+                playerObject = players.toothy
+            }
         }
-        const playerMoved = movePlayer(cursors, playerObject, canvasW);
-        animateMovement({ player: playerObject, reflect: reflect }, spriteToControl);
 
-        // if (playerMoved) {
-        //     socket.emit("move", { x: player.crabby.x, y: player.crabby.y })
-        //     player.movedLastFrame = true
-        //     console.log(player.crabby.x, player.crabby.y)
-        // }
 
-        // else {
-        //     if(player.movedLastFrame) {
-        //         socket.emit("moveEnd")
-        //     }
-        //     player.movedLastFrame = false
-        // }
+        let playerMoved
 
+        //animate sprite movements
         
+        if (cursors.left.isDown && !pressedKeys.includes(cursors.left.keyCode)){
+            console.log('pressed')
+            pressedKeys.push(cursors.left.keyCode)
+        } else if (cursors.left.isUp && pressedKeys.includes(cursors.left.keyCode)){
+            console.log('removed')
+            pressedKeys = pressedKeys.filter(key => key !== cursors.left.keyCode);
+        }
+
+        if (cursors.right.isDown && !pressedKeys.includes(cursors.right.keyCode)){
+            console.log('pressed')
+            pressedKeys.push(cursors.right.keyCode)
+        } else if (cursors.right.isUp && pressedKeys.includes(cursors.right.keyCode)){
+            console.log('removed')
+            pressedKeys = pressedKeys.filter(key => key !== cursors.right.keyCode);
+        }
+
+        if (cursors.up.isDown && !pressedKeys.includes(cursors.up.keyCode)){
+            console.log('pressed')
+            pressedKeys.push(cursors.up.keyCode)
+        } else if (cursors.up.isUp && pressedKeys.includes(cursors.up.keyCode)){
+            console.log('removed')
+            pressedKeys = pressedKeys.filter(key => key !== cursors.up.keyCode);
+        }
+
+        if (!!playerObject) {
+            playerMoved = movePlayer(cursors, playerObject, canvasW);
+            animateMovement({ player: playerObject, reflect: reflect }, spriteToControl);
+
+            if (playerMoved) {
+                socket.emit("move", { x: playerObject.x / canvasW, y: playerObject.y / canvasH, character: spriteToControl, roomID: gameData.roomID })
+                playerObject.movedLastFrame = true;
+            } else {
+                if (playerObject.movedLastFrame) {
+                    socket.emit('moveEnd', { character: spriteToControl, roomID: gameData.roomID });
+                }
+                playerObject.movedLastFrame = false;
+            }
+        }
+
     }
 
 }

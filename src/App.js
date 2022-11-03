@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 import React, { useEffect, useState } from 'react';
 
 import './App.css';
@@ -7,6 +7,7 @@ import { socket } from './socket/index'
 
 function App() {
   const [gameData, setgameData] = useState(0);
+  const navigate = useNavigate()
 
   useEffect(() => {
     socket.on("connect", () => {
@@ -14,11 +15,13 @@ function App() {
     });
 
     socket.on('disconnect', () => {
-      console.log('socket disconnected')
+      alert('Lost connection')
+      navigate("/home")
     });
 
     socket.on("change state", (game_Data) => {
       window.localStorage.setItem("gameData", JSON.stringify(game_Data))
+      window.localStorage.setItem("previousSocket", socket.id)
       window.dispatchEvent(new Event("storage"));
       setgameData(game_Data)
     })
@@ -34,7 +37,7 @@ function App() {
   useEffect(() => {
     socket.on("user joining waiting room", (joiningData) => {
       if (sessionStorage.getItem('username') === gameData.host.user) {
-        if (gameData.players.length < 3) {
+        if (gameData.players.length < 3 || gameData.gameStarted === false) {
           let newGameData = { ...gameData }
 
           let freeCharacters = ['captain', 'crabby', 'pinkie', 'toothy']

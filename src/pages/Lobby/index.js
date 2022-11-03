@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
+import { socket } from '../../socket/index'
 
 const Lobby = () => {
 
@@ -15,9 +16,13 @@ const Lobby = () => {
     window.addEventListener('storage', storageEventHandler);
   }, []);
 
+  function handleGameStart() {
+    socket.emit('start game', gameData)
+  }
+
   function ifHost() {
     if (gameData.host.user === sessionStorage.getItem('username')) {
-      return (<button className='start'>Start game</button>)
+      return (<button className='start' onClick={handleGameStart}>Start game</button>)
     } else {
       return (
         <p className='wait-for-host'>Waiting for host to start the game...</p>
@@ -52,6 +57,7 @@ const Lobby = () => {
             </>
         }
       </div>
+      {!!gameData.gameStarted && <Navigate replace to="/game" />}
     </>
   )
 };
