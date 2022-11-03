@@ -1,9 +1,36 @@
-import { React, useEffect } from "react"
+
+import { React, useState, useEffect } from "react"
+
 import { socket } from '../../socket/index.js'
 import { useNavigate } from "react-router-dom";
 
 const Join = () => {
   const navigate = useNavigate()
+  const [loading, setLoading] = useState(true)
+
+  // check if token is valid
+  useEffect(() => {
+
+    if(!sessionStorage.getItem('token')){
+      navigate("/")
+    } else {
+      const options = { headers: new Headers({ 'Authorization': sessionStorage.getItem('token') }) }
+      // fetch("http://0.0.0.0:5001/token", options)
+      fetch("https://black-beard-island.herokuapp.com/token", options)
+        .then(res => {
+          if (!res.ok){
+            handleLogout()
+          } else {
+            setLoading(false)
+          }
+        })
+      }
+      const handleLogout = () => {
+        sessionStorage.clear();
+        navigate("/")
+      }
+      
+    })
 
   useEffect(() => {
     if (!!localStorage.getItem('gameData')) {
@@ -33,7 +60,10 @@ const Join = () => {
   }
 
   return (
+    
     <div className="menu-img-l" role="main">
+      {loading? <h2>Loading ... </h2> :
+      <>
       <div className='scoreboard-btn scoreboard-text' style={{ position: 'fixed', right: '6rem', top: '3.5rem' }} onClick={() => { navigate('/home') }}>Home</div>
       <div className="content-section container-join">
         <h1>Join a Game</h1>
@@ -44,6 +74,8 @@ const Join = () => {
 
         </form>
       </div>
+      </>
+      }
     </div>
   )
 };

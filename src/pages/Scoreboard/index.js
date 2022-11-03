@@ -9,6 +9,30 @@ const Scoreboard = () => {
     const navigate = useNavigate()
 
   // check if token is valid
+  useEffect(() => {
+
+    if(!sessionStorage.getItem('token')){
+      navigate("/")
+    } else {
+      const options = { headers: new Headers({ 'Authorization': sessionStorage.getItem('token') }) }
+      // fetch("http://0.0.0.0:5001/token", options)
+      fetch("https://black-beard-island.herokuapp.com/token", options)
+        .then(res => {
+          if (!res.ok){
+            handleLogout()
+          } else {
+            setLoading(false)
+          }
+        })
+      }
+      const handleLogout = () => {
+        sessionStorage.clear();
+        navigate("/")
+      }
+      
+    })
+
+  // check if token is valid
     useEffect(() => {
       if(!sessionStorage.getItem('token')){
         navigate("/")
@@ -36,6 +60,7 @@ const Scoreboard = () => {
     useEffect(() => {
       const fetchHighestScore = async () => {
         try{
+            // const { data } = await axios.get(`http://0.0.0.0:5001/users`)
             const { data } = await axios.get(`https://black-beard-island.herokuapp.com/users`)
             setData(data)
         } catch(error){
