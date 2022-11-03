@@ -9,6 +9,4 @@ export const animateMovement = (gameObjects, sprite) => {
     else if (gameObjects.player.body.touching.down) {
         gameObjects.player.anims.play(sprite+'-idle', true);
     }
-
-    gameObjects.reflect.reflectL.anims.play('reflectL', true);
 };

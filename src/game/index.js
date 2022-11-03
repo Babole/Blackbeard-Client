@@ -18,8 +18,8 @@ const canvasW = window.innerWidth
 const canvasH = window.innerWidth / 3
 
 
-let gameData 
-let username 
+let gameData
+let username
 
 let reflect
 
@@ -54,7 +54,7 @@ class GameScene extends Phaser.Scene {
         gameData = JSON.parse(localStorage.getItem('gameData'))
         username = sessionStorage.getItem('username')
 
-        if (socket.id != localStorage.getItem('previousSocket')) {
+        if (socket.id === localStorage.getItem('previousSocket')) {
             for (let i = 0; i < gameData.players.length + 1; i++) {
                 if (i < gameData.players.length) {
                     spritesInGame.push(gameData.players[i].character)
@@ -69,7 +69,7 @@ class GameScene extends Phaser.Scene {
                 }
             }
         } else {
-            // window.location.href = '/home'
+            window.location.href = '/home'
         }
     }
 
@@ -137,7 +137,6 @@ class GameScene extends Phaser.Scene {
         //sprite
         if (spritesInGame.includes("captain")) {
             players.captain = this.physics.add.sprite(canvasW / 2, canvasH - platforms.children.entries[1].displayHeight * 3, 'captain-idle').setScale(canvasW / 500)
-            console.log(players.captain.displayWidth)
             if (players.captain.displayWidth < 300) {
                 players.captain.body.setSize(players.captain.displayWidth * 0.1, players.captain.displayHeight * 0.1)
             } else {
@@ -296,8 +295,32 @@ class GameScene extends Phaser.Scene {
         this.game.events.emit("READY", true)
 
         socket.on('move', (data) => {
-            console.log('recieved move');
+            const velocityX = data.velocityX * canvasW
 
+            let otherPlayer = getPlayer(data.character)
+
+            function getPlayer(character) {
+                if (character === 'captain') {
+                    return players.captain
+                } else if (character === 'crabby') {
+                    return players.crabby
+                } else if (character === 'pinkie') {
+                    return players.pinkie
+                } else if (character === 'toothy') {
+                    return players.toothy
+                }
+            }
+
+            if (velocityX > 0) {
+                otherPlayer.flipX = true;
+            } else if (velocityX < 0) {
+                otherPlayer.flipX = false;
+            }
+
+            otherPlayer.setVelocityX(velocityX)
+        });
+
+        socket.on('moveEnd', (data) => {
             const newX = data.x * canvasW
             const newY = data.y * canvasH
             let otherPlayer = getPlayer(data.character)
@@ -313,22 +336,13 @@ class GameScene extends Phaser.Scene {
                     return players.toothy
                 }
             }
-            
 
-            if (otherPlayer.x > newX) {
-                otherPlayer.flipX = false;
-            } else if (otherPlayer.x < newX) {
-                otherPlayer.flipX = true;
-            }
-
-            otherPlayer.x = newX;
-            otherPlayer.y = newY;
-            otherPlayer.moving = true;
+            otherPlayer.setVelocityX(0)
+            otherPlayer.x = newX
+            otherPlayer.y = newY
         });
 
-        socket.on('moveEnd', (data) => {
-            console.log('recieved moveEnd');
-
+        socket.on('jump', (data) => {
             let otherPlayer = getPlayer(data.character)
 
             function getPlayer(character) {
@@ -343,7 +357,7 @@ class GameScene extends Phaser.Scene {
                 }
             }
 
-            otherPlayer.moving = false;
+            otherPlayer.setVelocityY(-0.6*canvasW)
         });
     }
 
@@ -364,50 +378,55 @@ class GameScene extends Phaser.Scene {
             }
         }
 
-
-        let playerMoved
-
-        //animate sprite movements
-        
-        if (cursors.left.isDown && !pressedKeys.includes(cursors.left.keyCode)){
-            console.log('pressed')
-            pressedKeys.push(cursors.left.keyCode)
-        } else if (cursors.left.isUp && pressedKeys.includes(cursors.left.keyCode)){
-            console.log('removed')
-            pressedKeys = pressedKeys.filter(key => key !== cursors.left.keyCode);
-        }
-
-        if (cursors.right.isDown && !pressedKeys.includes(cursors.right.keyCode)){
-            console.log('pressed')
-            pressedKeys.push(cursors.right.keyCode)
-        } else if (cursors.right.isUp && pressedKeys.includes(cursors.right.keyCode)){
-            console.log('removed')
-            pressedKeys = pressedKeys.filter(key => key !== cursors.right.keyCode);
-        }
-
-        if (cursors.up.isDown && !pressedKeys.includes(cursors.up.keyCode)){
-            console.log('pressed')
-            pressedKeys.push(cursors.up.keyCode)
-        } else if (cursors.up.isUp && pressedKeys.includes(cursors.up.keyCode)){
-            console.log('removed')
-            pressedKeys = pressedKeys.filter(key => key !== cursors.up.keyCode);
-        }
-
         if (!!playerObject) {
-            playerMoved = movePlayer(cursors, playerObject, canvasW);
-            animateMovement({ player: playerObject, reflect: reflect }, spriteToControl);
 
-            if (playerMoved) {
-                socket.emit("move", { x: playerObject.x / canvasW, y: playerObject.y / canvasH, character: spriteToControl, roomID: gameData.roomID })
-                playerObject.movedLastFrame = true;
-            } else {
-                if (playerObject.movedLastFrame) {
-                    socket.emit('moveEnd', { character: spriteToControl, roomID: gameData.roomID });
-                }
-                playerObject.movedLastFrame = false;
+            if (cursors.left.isDown && !pressedKeys.includes(cursors.left.keyCode)) {
+                playerObject.setVelocityX(-0.3 * canvasW);
+                playerObject.flipX = false;
+
+                socket.emit("move", { velocityX: playerObject.body.velocity.x / canvasW, character: spriteToControl, roomID: gameData.roomID })
+                pressedKeys.push(cursors.left.keyCode)
+            } else if (cursors.left.isUp && pressedKeys.includes(cursors.left.keyCode)) {
+                playerObject.setVelocityX(0);
+
+                socket.emit('moveEnd', { x: playerObject.x / canvasW, y: playerObject.y / canvasH, character: spriteToControl, roomID: gameData.roomID });
+                pressedKeys = pressedKeys.filter(key => key !== cursors.left.keyCode);
             }
-        }
 
+            if (cursors.right.isDown && !pressedKeys.includes(cursors.right.keyCode)) {
+                playerObject.setVelocityX(0.3 * canvasW);
+                playerObject.flipX = true;
+
+                socket.emit("move", { velocityX: playerObject.body.velocity.x / canvasW, character: spriteToControl, roomID: gameData.roomID })
+                pressedKeys.push(cursors.right.keyCode)
+            } else if (cursors.right.isUp && pressedKeys.includes(cursors.right.keyCode)) {
+                playerObject.setVelocityX(0);
+
+                socket.emit('moveEnd', { x: playerObject.x / canvasW, y: playerObject.y / canvasH, character: spriteToControl, roomID: gameData.roomID });
+                pressedKeys = pressedKeys.filter(key => key !== cursors.right.keyCode);
+            }
+
+            if (cursors.up.isDown && playerObject.body.touching.down) {
+                playerObject.setVelocityY(-0.6 * canvasW);
+                socket.emit("jump", { character: spriteToControl, roomID: gameData.roomID })
+            }
+
+            if (spritesInGame.includes("captain")) {
+                animateMovement({ player: players.captain }, "captain");
+            }
+            if (spritesInGame.includes("crabby")) {
+                animateMovement({ player: players.crabby }, "crabby");
+            }
+            if (spritesInGame.includes("pinkie")) {
+                animateMovement({ player: players.pinkie }, "pinkie");
+            }
+            if (spritesInGame.includes("toothy")) {
+                animateMovement({ player: players.toothy }, "toothy");
+            }
+
+
+            reflect.reflectL.anims.play('reflectL', true);
+        }
     }
 
 }
