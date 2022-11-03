@@ -42,7 +42,12 @@ const Lobby = () => {
   }, []);
 
   function handleGameStart() {
-    socket.emit('start game', gameData)
+    let newGameData = { ...gameData }
+    newGameData.bombSpeeds = []
+    newGameData.players.forEach(() => {
+      newGameData.bombSpeeds.push({x: Math.random() * (0.11-0.07) + 0.07, y: Math.random() * (0.11-0.07) + 0.07})
+    });
+    socket.emit('start game', newGameData)
   }
 
   function ifHost() {
@@ -68,10 +73,11 @@ const Lobby = () => {
               !!gameData
                 ?
                 <>
-                  <h1 data-testid="greeting">Welcome to Room {gameData.roomID}</h1>
-                  <h2>Host: {gameData.host.user} <img src={'assets/characters/' + gameData.host.character + '.png'} alt={gameData.host.character}></img></h2>
-                  <h2>Players (max: 3): </h2>
-                  <h2><ul>{gameData.players.map(user => { return <li key={user.user}>{user.user} <img src={'assets/characters/' + user.character + '.png'} alt={user.character}></img> </li> })}</ul></h2>
+                  <h1>Welcome to Room {gameData.roomID}</h1>
+                  <h2>Host: {gameData.host.user} <img src={'assets/characters/' + gameData.host.character + '.png'} alt={gameData.host.character} className="sprite" height={"45"}></img></h2>
+                  <h2>Players (max 3): </h2>
+                  <h2><ul>{gameData.players.map(user => { return <li key={user.user}>{user.user} <img src={'assets/characters/' + user.character + '.png'} alt={user.character} className="sprite" height={"45"}></img> </li> })}</ul></h2>
+                  
                   {gameData.players.length >= 1
                     ? ifHost()
                     : <p className='game-id'>Two players required to start game...</p>
