@@ -42,7 +42,12 @@ const Lobby = () => {
   }, []);
 
   function handleGameStart() {
-    socket.emit('start game', gameData)
+    let newGameData = { ...gameData }
+    newGameData.bombSpeeds = []
+    newGameData.players.forEach(() => {
+      newGameData.bombSpeeds.push({x: Math.random() * (0.11-0.07) + 0.07, y: Math.random() * (0.11-0.07) + 0.07})
+    });
+    socket.emit('start game', newGameData)
   }
 
   function ifHost() {
