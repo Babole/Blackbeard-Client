@@ -1,5 +1,4 @@
 import Phaser from 'phaser';
-import { movePlayer } from "./movement"
 import { animateMovement } from './animation'
 import { socket } from '../socket/index'
 
@@ -8,9 +7,10 @@ let spritesInGame = []
 let playerObject
 let players = {}
 
-var platforms;
-var cursors;
-var gameOver = false;
+let bombs = []
+let platforms;
+let cursors;
+let gameOver = false;
 
 let pressedKeys = []
 
@@ -30,6 +30,10 @@ class GameScene extends Phaser.Scene {
         this.load.image('sky', '/assets/bgImg.png');
         this.load.spritesheet('terrain', '/assets/terrain.png', { frameWidth: 32, frameHeight: 32 })
         this.load.spritesheet('water-reflectL', '/assets/waterReflectL.png', { frameWidth: 170, frameHeight: 10 })
+
+        //bombs
+        this.load.image('bomb', '/assets/bomb.png');
+        this.load.spritesheet('bomb-explode', 'assets/bombExplode.png', { frameWidth: 54, frameHeight: 60 });
 
         //captain sprites
         this.load.spritesheet('captain-idle', 'assets/characters/captain/idle.png', { frameWidth: 64, frameHeight: 40 });
@@ -145,6 +149,9 @@ class GameScene extends Phaser.Scene {
 
             players.captain.setCollideWorldBounds(true);
             this.physics.add.collider(players.captain, platforms);
+            if (spriteToControl === 'captain') {
+                playerObject = players.captain
+            }
         }
 
         if (spritesInGame.includes("crabby")) {
@@ -157,6 +164,9 @@ class GameScene extends Phaser.Scene {
 
             players.crabby.setCollideWorldBounds(true);
             this.physics.add.collider(players.crabby, platforms);
+            if (spriteToControl === 'crabby') {
+                playerObject = players.crabby
+            }
         }
 
         if (spritesInGame.includes("pinkie")) {
@@ -169,6 +179,9 @@ class GameScene extends Phaser.Scene {
 
             players.pinkie.setCollideWorldBounds(true);
             this.physics.add.collider(players.pinkie, platforms);
+            if (spriteToControl === 'pinkie') {
+                playerObject = players.pinkie
+            }
         }
 
         if (spritesInGame.includes("toothy")) {
@@ -181,6 +194,25 @@ class GameScene extends Phaser.Scene {
 
             players.toothy.setCollideWorldBounds(true);
             this.physics.add.collider(players.toothy, platforms);
+            if (spriteToControl === 'toothy') {
+                playerObject = players.toothy
+            }
+        }
+
+        // bombs
+        if (!!playerObject) {
+            for (let i = 0; i < 2; i++) {
+                bombs.push(this.physics.add.sprite((canvasW / 5) * i + (canvasW / 8), canvasH / 2, 'bomb').setScale(canvasW / 500))
+
+                bombs[i].body.setAllowGravity(false);
+                bombs[i].setCollideWorldBounds(true);
+                this.physics.add.collider(bombs[i], platforms);
+                bombs[i].setVelocityX(-0.1 * canvasW)
+                bombs[i].setVelocityY(0.1 * canvasW)
+                bombs[i].setBounce(1);
+
+                this.physics.add.overlap(playerObject, bombs[i], hitBomb);
+            }
         }
 
         // defining animations
@@ -282,7 +314,13 @@ class GameScene extends Phaser.Scene {
                 frames: this.anims.generateFrameNumbers('water-reflectL', { start: 0, end: 3 }),
                 frameRate: 10,
                 repeat: -1
-            }
+            },
+            {
+                key: 'bomb-explode',
+                frames: this.anims.generateFrameNumbers('bomb-explode', { start: 0, end: 6 }),
+                frameRate: 10,
+                repeat: 0
+            },
         ]
 
         for (let animIndex = 0; animIndex < animations.length; animIndex++) {
@@ -357,25 +395,33 @@ class GameScene extends Phaser.Scene {
                 }
             }
 
-            otherPlayer.setVelocityY(-0.6*canvasW)
+            otherPlayer.setVelocityY(-0.6 * canvasW)
+        });
+
+        socket.on('bomb explode', (data) => {
+            let otherPlayer = getPlayer(data.character)
+
+            function getPlayer(character) {
+                if (character === 'captain') {
+                    return players.captain
+                } else if (character === 'crabby') {
+                    return players.crabby
+                } else if (character === 'pinkie') {
+                    return players.pinkie
+                } else if (character === 'toothy') {
+                    return players.toothy
+                }
+            }
+
+            bombs[data.bombHit].anims.play('bomb-explode');
+            otherPlayer.visible = false;
+            setTimeout(() => bombs[data.bombHit].destroy(), 1000)
         });
     }
 
     update() {
         if (gameOver) {
             return;
-        }
-
-        if (!!spriteToControl) {
-            if (spriteToControl === 'captain') {
-                playerObject = players.captain
-            } else if (spriteToControl === 'crabby') {
-                playerObject = players.crabby
-            } else if (spriteToControl === 'pinkie') {
-                playerObject = players.pinkie
-            } else if (spriteToControl === 'toothy') {
-                playerObject = players.toothy
-            }
         }
 
         if (!!playerObject) {
@@ -424,11 +470,21 @@ class GameScene extends Phaser.Scene {
                 animateMovement({ player: players.toothy }, "toothy");
             }
 
-
             reflect.reflectL.anims.play('reflectL', true);
         }
     }
 
+}
+
+function hitBomb(player, bomb) {
+    if (player === playerObject) {
+        let bombIndex = bombs.indexOf(bomb)
+        player.body.debugBodyColor = 0x0099ff
+        bomb.body.debugBodyColor = 0x0099ff
+        socket.emit('bomb explode', { bombHit: bombIndex, character: spriteToControl, roomID: gameData.roomID });
+        window.location.href = '/home'
+        alert('You died')
+    }
 }
 
 export { GameScene }

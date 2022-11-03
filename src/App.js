@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import React, { useEffect, useState } from 'react';
 
 import './App.css';
@@ -7,7 +7,6 @@ import { socket } from './socket/index'
 
 function App() {
   const [gameData, setgameData] = useState(0);
-  const navigate = useNavigate()
 
   useEffect(() => {
     socket.on("connect", () => {
@@ -16,7 +15,7 @@ function App() {
 
     socket.on('disconnect', () => {
       alert('Lost connection')
-      navigate("/home")
+      window.location.href = '/home'
     });
 
     socket.on("change state", (game_Data) => {
@@ -24,6 +23,11 @@ function App() {
       window.localStorage.setItem("previousSocket", socket.id)
       window.dispatchEvent(new Event("storage"));
       setgameData(game_Data)
+      if (!!game_Data.gameStarted && !game_Data.players.length) {
+        console.log(game_Data.host.user + ' is the winner!')
+        alert('You won!')
+        window.location.href = '/home'
+      }
     })
 
     return () => {
