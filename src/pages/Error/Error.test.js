@@ -1,5 +1,4 @@
 import { fireEvent, screen } from '@testing-library/react';
-import { createMemoryHistory } from 'history';
 import Error from './index'
 
 describe('Pages/Error', () => {
@@ -23,10 +22,9 @@ describe('Pages/Error', () => {
     })
     
     test('navigates back to Home', () => {
-        const history = createMemoryHistory();
         const Homebtn = screen.getByLabelText("Home Button")
         fireEvent.click(Homebtn)
-        expect (history.location.pathname).toBe('/')
+        expect (location.pathname).toBe('/home')
     })
 
 })
