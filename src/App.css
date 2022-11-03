@@ -34,6 +34,7 @@ button {
 }
 
 .scoreboard-frame {
+  image-rendering: pixelated;
   background-image: url('/public/assets/scoreboard_frame.png');
   background-repeat: no-repeat;
   background-size: cover;
@@ -157,4 +158,8 @@ button {
 .home-btn:hover {
   cursor: pointer;
   transform: scale(1.1)
+}
+
+.sprite {
+  image-rendering: pixelated;
 }
