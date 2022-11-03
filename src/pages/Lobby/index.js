@@ -68,7 +68,7 @@ const Lobby = () => {
               !!gameData
                 ?
                 <>
-                  <h1>Welcome to Room {gameData.roomID}</h1>
+                  <h1 data-testid="greeting">Welcome to Room {gameData.roomID}</h1>
                   <h2>Host: {gameData.host.user} <img src={'assets/characters/' + gameData.host.character + '.png'} alt={gameData.host.character}></img></h2>
                   <h2>Players (max: 3): </h2>
                   <h2><ul>{gameData.players.map(user => { return <li key={user.user}>{user.user} <img src={'assets/characters/' + user.character + '.png'} alt={user.character}></img> </li> })}</ul></h2>

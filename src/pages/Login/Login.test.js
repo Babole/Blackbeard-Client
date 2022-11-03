@@ -44,7 +44,7 @@ describe('Pages/Login', () => {
         expect (submitbtn).toBeInTheDocument
     })
 
-    xtest('passes login information', () => {
+    test('passes login information', () => {
         const username = 'hello'
         const password = '123password'
         const wrapper = shallow(<Login handleLogin={state => {

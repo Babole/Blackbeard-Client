@@ -7,11 +7,12 @@ const Login = () => {
     const [password, setPassword] = useState(null);
 
     const navigate = useNavigate();
-
+    
     useEffect(()=>{
         setLoading(false)
     },[])
 
+    /* istanbul ignore next */
     const handleLogin = async (e) => {
         e.preventDefault()
         const loginData = {
@@ -70,7 +71,9 @@ const Login = () => {
                         />
                     </div>
                     <div className="form-group">
-                        <label name="password">Password</label>
+                        <label 
+                        aria-label="password"
+                        name="password">Password</label>
                         <input
                             type="password"
                             className="form-control mt-1"

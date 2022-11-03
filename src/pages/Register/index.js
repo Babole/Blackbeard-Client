@@ -12,8 +12,9 @@ const Register = () => {
     useEffect(()=>{
         setLoading(false)
     },[])
-
+    /* istanbul ignore next */
     const handleRegister = async (e) => {
+        /* istanbul ignore next */
         e.preventDefault()
 
         const registerData = {
@@ -26,6 +27,7 @@ const Register = () => {
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(registerData)
         }
+        
         
         try{
             
@@ -85,7 +87,7 @@ const Register = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                         </div>
-                        <div class="form-group">
+                        <div className="form-group">
                             <label name="confirm_password"
                             aria-label="confirm password"
                             >Confirm Password</label>
@@ -101,7 +103,9 @@ const Register = () => {
                         <div>
                         <small className="text-muted" data-testid="redirect-btn"
                         style={{display: 'flex', gap:'1rem', margin: '1rem 0rem'}}>
-                            Already have an account? <small className="signInUp-redirect" onClick={() => {navigate('/')}}style={{marginLeft: '1rem'}}>Sign In</small>
+                            Already have an account? <small className="signInUp-redirect" 
+                            aria-label="Sign In Button"
+                            onClick={() => {navigate('/')}}style={{marginLeft: '1rem'}}>Sign In</small>
 
                         </small>
                 </div>
