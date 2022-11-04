@@ -37,9 +37,13 @@ button {
   image-rendering: pixelated;
   background-image: url('/public/assets/scoreboard_frame.png');
   background-repeat: no-repeat;
-  background-size: cover;
-  min-height: 47rem;
-  min-width: 30rem;
+  background-size: contain;
+  background-position: center;
+  margin-top: 5rem;
+  height: 42rem;
+  width: 35rem;
+  display: flex;
+  justify-content: center;
 }
 
 .scoreboard-btn {

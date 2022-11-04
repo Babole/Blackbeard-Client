@@ -50,8 +50,8 @@ const Scoreboard = () => {
     const descending = data.sort((a,b) => b.games_won - a.games_won)
     const winners = descending.map((player, index) => {
        return(
-        <div key={index+1} aria-label="scoreboard" className="scoreboard-text" style={{border: 'none', borderRadius: '15px', padding: '0rem 2rem', margin: '1rem 6rem'}}>
-            <h4>{index+1}. &nbsp;{player.username} &nbsp; {player.games_won}</h4>
+        <div key={index+1} aria-label="scoreboard" className="scoreboard-text" style={{border: 'none', borderRadius: '15px', padding: '0rem 4rem', margin: '1rem 0rem'}}>
+            <h4 style={{lineHeight:'0.1rem', fontSize:'0.8rem', margin:'0.5rem', flexWrap:'wrap'}}>{index+1}. &nbsp;{player.username} &nbsp; {player.games_won}</h4>
         </div>
        )
     })  
@@ -61,7 +61,7 @@ const Scoreboard = () => {
   return (
     <div>
       {loading ? <h2>Loading ...</h2> : 
-      <>
+      <div style={{height: '100vh', marginTop:'3rem'}}>
         <h1 className="scoreboard-text" style={{textAlign: 'center'}}
         data-testid="header"
         >Scoreboard</h1>
@@ -70,11 +70,11 @@ const Scoreboard = () => {
         <div className='scoreboard-btn scoreboard-text' style={{position: 'fixed', right:'6rem', top: '3.5rem'}} onClick={ () => { navigate('/home') } }>Home</div>
 
         <div className="scoreboard-frame">
-            <div style={{paddingTop: '7em'}}>
+            <div style={{marginTop: '4em', overflow:'scroll',  width:'25rem', display:'flex', paddingTop:'6rem', height:'60%', flexDirection:'column', justifyContent:'center', overflowY:'auto'}}>
                 {winners}
             </div>
         </div>
-      </>
+      </div>
     }
     </div>
   )
